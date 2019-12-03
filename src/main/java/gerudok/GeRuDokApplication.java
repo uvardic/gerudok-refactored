@@ -1,6 +1,6 @@
 package gerudok;
 
-import gerudok.view.MainFrame;
+import gerudok.ui.MainFrame;
 
 public class GeRuDokApplication {
 

@@ -4,6 +4,7 @@ import gerudok.tree.exception.IllegalTreeChildException;
 import gerudok.tree.view.ElementNode;
 import gerudok.tree.view.PageNode;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.Set;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.stream.Collectors.toList;
 
-public class Slot implements TreeModel {
+public class Slot implements Serializable {
 
     private final String name;
 
@@ -54,7 +55,6 @@ public class Slot implements TreeModel {
                 .collect(toList());
     }
 
-    @Override
     public String formatName() {
         return String.format("%s - %d", name, parent.getChildren().size());
     }

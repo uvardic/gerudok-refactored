@@ -1,7 +1,5 @@
 package gerudok.view;
 
-import gerudok.tree.Tree;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,19 +32,14 @@ public class MainFrame extends JFrame {
 
     private static void setupMainFrame() {
         instance.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        instance.setSize(MainFrameSizeCalculator.calculateFrameSize());
-        instance.setMinimumSize(MainFrameSizeCalculator.calculateFrameMinSize());
-        instance.setMaximumSize(MainFrameSizeCalculator.calculateFrameMaxSize());
+        instance.setSize(UISizeCalculator.calculateFrameSize());
+        instance.setMinimumSize(UISizeCalculator.calculateFrameMinSize());
+        instance.setMaximumSize(UISizeCalculator.calculateFrameMaxSize());
         instance.setExtendedState(MAXIMIZED_BOTH);
     }
 
     private static void setupMainFrameUI() {
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-
-        splitPane.setLeftComponent(new JScrollPane(Tree.getInstance()));
-        splitPane.setRightComponent(new JPanel());
-
-        instance.add(splitPane, BorderLayout.CENTER);
+        instance.add(SplitPane.getInstance(), BorderLayout.CENTER);
     }
 
 }

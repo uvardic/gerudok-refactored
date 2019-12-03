@@ -9,12 +9,17 @@ import java.util.Objects;
 
 import static java.util.Collections.enumeration;
 
-public class ProjectNode implements TreeNode {
+public class ProjectNode implements Node {
 
     private final Project model;
 
     public ProjectNode(Project model) {
         this.model = model;
+    }
+
+    @Override
+    public String formatName() {
+        return model.formatName();
     }
 
     @Override

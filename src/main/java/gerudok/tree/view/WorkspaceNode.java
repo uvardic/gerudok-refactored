@@ -9,12 +9,17 @@ import java.util.Objects;
 
 import static java.util.Collections.enumeration;
 
-public class WorkspaceNode implements TreeNode {
+public class WorkspaceNode implements Node {
 
     private final Workspace model;
 
     public WorkspaceNode(Workspace model) {
         this.model = model;
+    }
+
+    @Override
+    public String formatName() {
+        return model.formatName();
     }
 
     @Override

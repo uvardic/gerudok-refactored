@@ -5,12 +5,17 @@ import gerudok.tree.model.Element;
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
 
-public class ElementNode implements TreeNode {
+public class ElementNode implements Node {
 
     private final Element model;
 
     public ElementNode(Element model) {
         this.model = model;
+    }
+
+    @Override
+    public String formatName() {
+        return model.formatName();
     }
 
     @Override

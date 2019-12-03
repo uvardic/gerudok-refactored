@@ -56,7 +56,6 @@ public class Diagram implements Serializable {
                 .collect(toList());
     }
 
-    @Override
     public String formatName() {
         return String.format("%s - %d", name, parent.getChildren().size());
     }

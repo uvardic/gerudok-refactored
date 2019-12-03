@@ -9,12 +9,17 @@ import java.util.Objects;
 
 import static java.util.Collections.enumeration;
 
-public class DiagramNode implements TreeNode {
+public class DiagramNode implements Node {
 
     private final Diagram model;
 
     public DiagramNode(Diagram model) {
         this.model = model;
+    }
+
+    @Override
+    public String formatName() {
+        return model.formatName();
     }
 
     @Override

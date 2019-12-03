@@ -9,12 +9,17 @@ import java.util.Objects;
 
 import static java.util.Collections.enumeration;
 
-public class SlotNode implements TreeNode {
+public class SlotNode implements Node {
 
     private final Slot model;
 
     public SlotNode(Slot model) {
         this.model = model;
+    }
+
+    @Override
+    public String formatName() {
+        return model.formatName();
     }
 
     @Override

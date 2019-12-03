@@ -2,13 +2,13 @@ package gerudok.view;
 
 import java.awt.*;
 
-public class MainFrameSizeCalculator {
+public class UISizeCalculator {
 
     private static final int SCREEN_WIDTH = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 
     private static final int SCREEN_HEIGHT = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-    private MainFrameSizeCalculator() {}
+    private UISizeCalculator() {}
 
     static Dimension calculateFrameSize() {
         return new Dimension(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -20,6 +20,10 @@ public class MainFrameSizeCalculator {
 
     static Dimension calculateFrameMaxSize() {
         return new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
+
+    static int calculateSplitPaneDividerLocation() {
+        return SCREEN_WIDTH / 6;
     }
 
 }

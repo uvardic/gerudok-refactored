@@ -9,12 +9,17 @@ import java.util.Objects;
 
 import static java.util.Collections.enumeration;
 
-public class PageNode implements TreeNode {
+public class PageNode implements Node {
 
     private final Page model;
 
     public PageNode(Page model) {
         this.model = model;
+    }
+
+    @Override
+    public String formatName() {
+        return model.formatName();
     }
 
     @Override

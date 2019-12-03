@@ -2,7 +2,9 @@ package gerudok.tree.model;
 
 import gerudok.tree.view.SlotNode;
 
-public class Element implements TreeModel {
+import java.io.Serializable;
+
+public class Element implements Serializable {
 
     private final String name;
 
@@ -22,7 +24,6 @@ public class Element implements TreeModel {
         return new SlotNode(parent);
     }
 
-    @Override
     public String formatName() {
         return String.format("%s - %d", name, parent.getChildren().size());
     }

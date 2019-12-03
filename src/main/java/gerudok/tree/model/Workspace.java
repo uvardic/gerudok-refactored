@@ -3,6 +3,7 @@ package gerudok.tree.model;
 import gerudok.tree.exception.IllegalTreeChildException;
 import gerudok.tree.view.ProjectNode;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,7 @@ import java.util.Set;
 import static java.util.Collections.unmodifiableSet;
 import static java.util.stream.Collectors.toList;
 
-public class Workspace implements TreeModel {
+public class Workspace implements Serializable {
 
     private final String name;
 
@@ -41,7 +42,6 @@ public class Workspace implements TreeModel {
                 .collect(toList());
     }
 
-    @Override
     public String formatName() {
         return name;
     }

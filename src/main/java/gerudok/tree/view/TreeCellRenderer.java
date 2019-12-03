@@ -1,6 +1,7 @@
-package gerudok.tree.controller;
+package gerudok.tree.view;
 
-import gerudok.tree.view.Node;
+import gerudok.tree.node.Node;
+import gerudok.tree.visitor.TreeCellRendererVisitor;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -12,11 +13,11 @@ public class TreeCellRenderer extends DefaultTreeCellRenderer {
     public Component getTreeCellRendererComponent(
             JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus
     ) {
-        super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+        super.getTreeCellRendererComponent(tree, ((Node) value).formatName(), sel, expanded, leaf, row, hasFocus);
 
         Node node = (Node) value;
 
-        setText(node.formatName());
+        node.acceptTreeCellRendererVisitor(new TreeCellRendererVisitor(this));
 
         return this;
     }

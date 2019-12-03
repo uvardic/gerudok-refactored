@@ -1,6 +1,6 @@
 package gerudok.tree.model;
 
-import gerudok.tree.view.SlotNode;
+import gerudok.tree.node.SlotNode;
 
 import java.io.Serializable;
 

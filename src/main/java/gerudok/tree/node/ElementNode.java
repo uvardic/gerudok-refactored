@@ -1,6 +1,7 @@
-package gerudok.tree.view;
+package gerudok.tree.node;
 
 import gerudok.tree.model.Element;
+import gerudok.tree.visitor.TreeCellRendererVisitor;
 
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
@@ -11,6 +12,11 @@ public class ElementNode implements Node {
 
     public ElementNode(Element model) {
         this.model = model;
+    }
+
+    @Override
+    public void acceptTreeCellRendererVisitor(TreeCellRendererVisitor visitor) {
+        visitor.visit(this);
     }
 
     @Override

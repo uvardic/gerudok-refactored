@@ -1,10 +1,9 @@
 package gerudok.tree.model;
 
 import gerudok.tree.exception.IllegalTreeChildException;
-import gerudok.tree.view.PageNode;
-import gerudok.tree.view.ProjectNode;
+import gerudok.tree.node.PageNode;
+import gerudok.tree.node.ProjectNode;
 
-import javax.sql.rowset.serial.SerialArray;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;

@@ -1,10 +1,10 @@
 package gerudok.tree;
 
-import gerudok.tree.controller.TreeCellRenderer;
 import gerudok.tree.controller.TreeMouseAdapter;
 import gerudok.tree.controller.TreeSelectionListenerImpl;
 import gerudok.tree.model.Workspace;
-import gerudok.tree.view.WorkspaceNode;
+import gerudok.tree.node.WorkspaceNode;
+import gerudok.tree.view.TreeCellRenderer;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -33,6 +33,7 @@ public class Tree extends JTree {
         return instance;
     }
 
+    // Extract when implementing workspace dialog?
     private static class TreeModel extends DefaultTreeModel {
 
         private TreeModel() {

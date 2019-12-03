@@ -1,7 +1,8 @@
-package gerudok.tree.view;
+package gerudok.tree.node;
 
 import gerudok.tree.exception.IllegalTreeChildException;
-import gerudok.tree.model.Diagram;
+import gerudok.tree.model.Project;
+import gerudok.tree.visitor.TreeCellRendererVisitor;
 
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
@@ -9,12 +10,17 @@ import java.util.Objects;
 
 import static java.util.Collections.enumeration;
 
-public class DiagramNode implements Node {
+public class ProjectNode implements Node {
 
-    private final Diagram model;
+    private final Project model;
 
-    public DiagramNode(Diagram model) {
+    public ProjectNode(Project model) {
         this.model = model;
+    }
+
+    @Override
+    public void acceptTreeCellRendererVisitor(TreeCellRendererVisitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
@@ -39,7 +45,7 @@ public class DiagramNode implements Node {
 
     @Override
     public int getIndex(TreeNode treeNode) {
-        if (!(treeNode instanceof PageNode))
+        if (!(treeNode instanceof DiagramNode))
             throw new IllegalTreeChildException("Illegal child instance!");
 
         return model.getChildrenAsNodes().indexOf(treeNode);
@@ -62,13 +68,13 @@ public class DiagramNode implements Node {
 
     @Override
     public String toString() {
-        return String.format("DiagramNode{model=%s}", model);
+        return String.format("ProjectNode{model=%s}", model);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof DiagramNode) {
-            DiagramNode other = (DiagramNode) o;
+        if (o instanceof ProjectNode) {
+            ProjectNode other = (ProjectNode) o;
 
             return Objects.equals(this.model, other.model);
         }
@@ -80,4 +86,5 @@ public class DiagramNode implements Node {
     public int hashCode() {
         return Objects.hash(model);
     }
+
 }

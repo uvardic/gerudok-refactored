@@ -1,7 +1,8 @@
-package gerudok.tree.view;
+package gerudok.tree.node;
 
 import gerudok.tree.exception.IllegalTreeChildException;
-import gerudok.tree.model.Page;
+import gerudok.tree.model.Workspace;
+import gerudok.tree.visitor.TreeCellRendererVisitor;
 
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
@@ -9,12 +10,17 @@ import java.util.Objects;
 
 import static java.util.Collections.enumeration;
 
-public class PageNode implements Node {
+public class WorkspaceNode implements Node {
 
-    private final Page model;
+    private final Workspace model;
 
-    public PageNode(Page model) {
+    public WorkspaceNode(Workspace model) {
         this.model = model;
+    }
+
+    @Override
+    public void acceptTreeCellRendererVisitor(TreeCellRendererVisitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
@@ -34,12 +40,12 @@ public class PageNode implements Node {
 
     @Override
     public TreeNode getParent() {
-        return model.getParentAsNode();
+        return null;
     }
 
     @Override
     public int getIndex(TreeNode treeNode) {
-        if (!(treeNode instanceof SlotNode))
+        if (!(treeNode instanceof ProjectNode))
             throw new IllegalTreeChildException("Illegal child instance!");
 
         return model.getChildrenAsNodes().indexOf(treeNode);
@@ -62,13 +68,13 @@ public class PageNode implements Node {
 
     @Override
     public String toString() {
-        return String.format("PageNode{model=%s}", model);
+        return String.format("WorkspaceNode{model=%s}", model);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof PageNode) {
-            PageNode other = (PageNode) o;
+        if (o instanceof WorkspaceNode) {
+            WorkspaceNode other = (WorkspaceNode) o;
 
             return Objects.equals(this.model, other.model);
         }
@@ -80,4 +86,5 @@ public class PageNode implements Node {
     public int hashCode() {
         return Objects.hash(model);
     }
+
 }

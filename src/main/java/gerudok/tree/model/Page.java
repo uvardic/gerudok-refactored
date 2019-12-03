@@ -1,8 +1,8 @@
 package gerudok.tree.model;
 
 import gerudok.tree.exception.IllegalTreeChildException;
-import gerudok.tree.view.DiagramNode;
-import gerudok.tree.view.SlotNode;
+import gerudok.tree.node.DiagramNode;
+import gerudok.tree.node.SlotNode;
 
 import java.io.Serializable;
 import java.util.HashSet;

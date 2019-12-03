@@ -28,4 +28,17 @@ public class ActionManager {
     public CreateDiagramAction getCreateDiagramAction() {
         return createDiagramAction;
     }
+
+    private final CreatePageAction createPageAction = new CreatePageAction();
+
+    public CreatePageAction getCreatePageAction() {
+        return createPageAction;
+    }
+
+    private final CreateSlotAction createSlotAction = new CreateSlotAction();
+
+    public CreateSlotAction getCreateSlotAction() {
+        return createSlotAction;
+    }
+
 }

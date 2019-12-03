@@ -3,7 +3,7 @@ package gerudok.controller;
 import gerudok.model.Diagram;
 import gerudok.observer.Observer;
 import gerudok.ui.Dialog;
-import gerudok.ui.desktop.Desktop;
+import gerudok.ui.Desktop;
 import gerudok.ui.tree.Tree;
 import gerudok.ui.tree.node.Node;
 import gerudok.ui.tree.node.ProjectNode;
@@ -28,7 +28,9 @@ public class CreateDiagramAction extends AbstractAction {
         Node lastSelectedNode = Tree.getInstance().getLastSelectedNode();
 
         if (!(lastSelectedNode instanceof ProjectNode)) {
-            Dialog.errorDialog("Create diagram error!", "Please select a project in order to create a new diagram.");
+            Dialog.errorDialog(
+                    "Create diagram error!", "Please select a project in order to create a new diagram."
+            );
             return;
         }
 

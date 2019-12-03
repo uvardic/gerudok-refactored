@@ -1,5 +1,6 @@
 package gerudok.model;
 
+import gerudok.ui.PagePanel;
 import gerudok.ui.tree.node.DiagramNode;
 import gerudok.ui.tree.node.PageNode;
 import gerudok.ui.tree.node.SlotNode;
@@ -27,6 +28,7 @@ public class Page implements Serializable {
         this.parent.addChild(this);
 
         new PageNode(this);
+        new PagePanel(this);
     }
 
     private String formatName(String name) {

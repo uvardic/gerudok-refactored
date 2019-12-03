@@ -1,8 +1,7 @@
-package gerudok.ui.desktop;
+package gerudok.ui;
 
 import gerudok.observer.Observer;
 import gerudok.observer.Subject;
-import gerudok.ui.DiagramFrame;
 
 import javax.swing.*;
 import java.beans.PropertyVetoException;
@@ -72,6 +71,18 @@ public class Desktop extends JDesktopPane implements Subject {
 
     public Set<DiagramFrame> getFrames() {
         return unmodifiableSet(frames);
+    }
+
+    public DiagramFrame getSelectedDiagramFrame() {
+        return (DiagramFrame) getSelectedFrame();
+    }
+
+    public PagePanel getSelectedPagePanel() {
+        return getSelectedDiagramFrame().getSelectedPagePanel();
+    }
+
+    public SlotPanel getSelectedSlotPanel() {
+        return getSelectedPagePanel().getSelectedSlotPanel();
     }
 
     @Override

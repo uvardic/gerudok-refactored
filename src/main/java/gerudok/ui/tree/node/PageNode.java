@@ -17,6 +17,10 @@ public class PageNode implements Node {
         this.model = model;
     }
 
+    public Page getModel() {
+        return model;
+    }
+
     @Override
     public void acceptTreeCellRendererVisitor(TreeCellRendererVisitor visitor) {
         visitor.visit(this);

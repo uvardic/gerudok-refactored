@@ -1,6 +1,5 @@
 package gerudok.ui;
 
-import gerudok.ui.desktop.Desktop;
 import gerudok.ui.tree.Tree;
 import gerudok.ui.util.UISizeCalculator;
 

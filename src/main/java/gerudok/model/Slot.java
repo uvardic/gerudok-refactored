@@ -1,5 +1,6 @@
 package gerudok.model;
 
+import gerudok.ui.SlotPanel;
 import gerudok.ui.tree.node.ElementNode;
 import gerudok.ui.tree.node.PageNode;
 import gerudok.ui.tree.node.SlotNode;
@@ -27,10 +28,11 @@ public class Slot implements Serializable {
         this.parent.addChild(this);
 
         new SlotNode(this);
+        new SlotPanel(this);
     }
 
     private String formatName(String name) {
-        return String.format("%s - %d", name, parent.getChildren().size());
+        return String.format("%s - %d", name, parent.getChildren().size() + 1);
     }
 
     public Page getParent() {

@@ -12,7 +12,7 @@ public enum UIIcon {
     SLOT_ICON("/icon/SlotIcon.png"),
     ELEMENT_ICON("/icon/ElementIcon.png");
 
-    String iconPath;
+    final String iconPath;
 
     UIIcon(String iconPath) {
         this.iconPath = iconPath;

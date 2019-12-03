@@ -3,7 +3,6 @@ package gerudok.model;
 import gerudok.ui.tree.node.ProjectNode;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;

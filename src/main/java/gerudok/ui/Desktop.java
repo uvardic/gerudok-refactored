@@ -1,5 +1,6 @@
 package gerudok.ui;
 
+import gerudok.model.Diagram;
 import gerudok.observer.Observer;
 import gerudok.observer.Subject;
 
@@ -7,8 +8,6 @@ import javax.swing.*;
 import java.beans.PropertyVetoException;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import static java.util.Collections.unmodifiableSet;
 
 public class Desktop extends JDesktopPane implements Subject {
 
@@ -52,12 +51,23 @@ public class Desktop extends JDesktopPane implements Subject {
         frame.setLocation(frames.size() * FRAME_X_OFFSET, frames.size() * FRAME_Y_OFFSET);
     }
 
-    public void selectFrame(DiagramFrame frame) {
+    private void selectFrame(DiagramFrame frame) {
         try {
             frame.setSelected(true);
         } catch (PropertyVetoException e) {
             e.printStackTrace();
         }
+    }
+
+    public DiagramFrame selectFrame(Diagram model) {
+        DiagramFrame frameToSelect = frames.stream()
+                .filter(frame -> frame.getModel().equals(model))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Diagram frame not found!"));
+
+        selectFrame(frameToSelect);
+
+        return frameToSelect;
     }
 
     public void removeFrame(DiagramFrame frame) {
@@ -67,10 +77,6 @@ public class Desktop extends JDesktopPane implements Subject {
 
     private void removeFrameFromDesktop(DiagramFrame frame) {
         remove(frame);
-    }
-
-    public Set<DiagramFrame> getFrames() {
-        return unmodifiableSet(frames);
     }
 
     public DiagramFrame getSelectedDiagramFrame() {

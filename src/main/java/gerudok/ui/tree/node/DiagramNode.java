@@ -2,6 +2,7 @@ package gerudok.ui.tree.node;
 
 import gerudok.model.Diagram;
 import gerudok.ui.tree.visitor.TreeCellRendererVisitor;
+import gerudok.ui.tree.visitor.TreeSelectionVisitor;
 
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
@@ -27,12 +28,17 @@ public class DiagramNode implements Node {
     }
 
     @Override
+    public void acceptTreeSelectionVisitor(TreeSelectionVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
     public String formatName() {
         return model.getName();
     }
 
     @Override
-    public TreeNode getChildAt(int i) {
+    public PageNode getChildAt(int i) {
         return model.getChildrenAsNodes().get(i);
     }
 
@@ -42,7 +48,7 @@ public class DiagramNode implements Node {
     }
 
     @Override
-    public TreeNode getParent() {
+    public ProjectNode getParent() {
         return model.getParentAsNode();
     }
 
@@ -65,7 +71,7 @@ public class DiagramNode implements Node {
     }
 
     @Override
-    public Enumeration<? extends TreeNode> children() {
+    public Enumeration<? extends PageNode> children() {
         return enumeration(model.getChildrenAsNodes());
     }
 

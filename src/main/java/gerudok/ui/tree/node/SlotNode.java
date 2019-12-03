@@ -2,6 +2,7 @@ package gerudok.ui.tree.node;
 
 import gerudok.model.Slot;
 import gerudok.ui.tree.visitor.TreeCellRendererVisitor;
+import gerudok.ui.tree.visitor.TreeSelectionVisitor;
 
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
@@ -17,8 +18,17 @@ public class SlotNode implements Node {
         this.model = model;
     }
 
+    public Slot getModel() {
+        return model;
+    }
+
     @Override
     public void acceptTreeCellRendererVisitor(TreeCellRendererVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public void acceptTreeSelectionVisitor(TreeSelectionVisitor visitor) {
         visitor.visit(this);
     }
 
@@ -28,7 +38,7 @@ public class SlotNode implements Node {
     }
 
     @Override
-    public TreeNode getChildAt(int i) {
+    public ElementNode getChildAt(int i) {
         return model.getChildrenAsNodes().get(i);
     }
 
@@ -38,7 +48,7 @@ public class SlotNode implements Node {
     }
 
     @Override
-    public TreeNode getParent() {
+    public PageNode getParent() {
         return model.getParentAsNode();
     }
 
@@ -61,7 +71,7 @@ public class SlotNode implements Node {
     }
 
     @Override
-    public Enumeration<? extends TreeNode> children() {
+    public Enumeration<? extends ElementNode> children() {
         return enumeration(model.getChildrenAsNodes());
     }
 

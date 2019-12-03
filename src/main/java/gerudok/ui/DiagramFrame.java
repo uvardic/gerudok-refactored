@@ -1,19 +1,24 @@
 package gerudok.ui;
 
 import gerudok.model.Diagram;
+import gerudok.model.Page;
 import gerudok.observer.Observer;
 import gerudok.observer.Subject;
 import gerudok.ui.util.UISizeCalculator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class DiagramFrame extends JInternalFrame implements Subject {
 
     private final Diagram model;
 
     private final JTabbedPane pageTabbedPane = new JTabbedPane();
+
+    private final Set<PagePanel> pagePanels = new LinkedHashSet<>();
 
     public DiagramFrame(Diagram model) {
         super(formatName(model), true, true, true, true);
@@ -41,19 +46,36 @@ public class DiagramFrame extends JInternalFrame implements Subject {
         setVisible(true);
     }
 
+    public Diagram getModel() {
+        return model;
+    }
+
     public void addPagePanel(PagePanel pagePanel) {
         if (pagePanel == null)
             throw new IllegalArgumentException("Page panel can't be null!");
 
+        pagePanels.add(pagePanel);
         pageTabbedPane.addTab(pagePanel.getModel().getName(), pagePanel);
     }
 
     public void removePagePanel(PagePanel pagePanel) {
+        pagePanels.remove(pagePanel);
         pageTabbedPane.remove(pagePanel);
     }
 
     public PagePanel getSelectedPagePanel() {
         return (PagePanel) pageTabbedPane.getSelectedComponent();
+    }
+
+    public PagePanel selectPagePanel(Page model) {
+        PagePanel pagePanelToSelect = pagePanels.stream()
+                .filter(pagePanel -> pagePanel.getModel().equals(model))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Page panel not found!"));
+
+        pageTabbedPane.setSelectedComponent(pagePanelToSelect);
+
+        return pagePanelToSelect;
     }
 
     @Override

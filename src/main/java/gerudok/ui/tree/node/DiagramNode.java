@@ -1,8 +1,9 @@
 package gerudok.ui.tree.node;
 
 import gerudok.model.Diagram;
-import gerudok.ui.tree.visitor.TreeCellRendererVisitor;
-import gerudok.ui.tree.visitor.TreeSelectionVisitor;
+import gerudok.ui.Desktop;
+import gerudok.ui.tree.view.TreeCellRenderer;
+import gerudok.ui.util.UIIcon;
 
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
@@ -23,13 +24,18 @@ public class DiagramNode implements Node {
     }
 
     @Override
-    public void acceptTreeCellRendererVisitor(TreeCellRendererVisitor visitor) {
-        visitor.visit(this);
+    public void renderCell(TreeCellRenderer cellRenderer) {
+        cellRenderer.setIcon(UIIcon.DIAGRAM_ICON.loadIcon());
     }
 
     @Override
-    public void acceptTreeSelectionVisitor(TreeSelectionVisitor visitor) {
-        visitor.visit(this);
+    public void openMenu() {
+
+    }
+
+    @Override
+    public void selectionEvent() {
+        Desktop.getInstance().selectFrame(model);
     }
 
     @Override

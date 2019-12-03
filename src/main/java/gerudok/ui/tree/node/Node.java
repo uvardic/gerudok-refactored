@@ -1,15 +1,16 @@
 package gerudok.ui.tree.node;
 
-import gerudok.ui.tree.visitor.TreeCellRendererVisitor;
-import gerudok.ui.tree.visitor.TreeSelectionVisitor;
+import gerudok.ui.tree.view.TreeCellRenderer;
 
 import javax.swing.tree.TreeNode;
 
 public interface Node extends TreeNode {
 
-    void acceptTreeCellRendererVisitor(TreeCellRendererVisitor visitor);
+    void renderCell(TreeCellRenderer cellRenderer);
 
-    void acceptTreeSelectionVisitor(TreeSelectionVisitor visitor);
+    void openMenu();
+
+    void selectionEvent();
 
     String formatName();
 

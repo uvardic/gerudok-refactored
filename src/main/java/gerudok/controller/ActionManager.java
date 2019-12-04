@@ -41,4 +41,9 @@ public class ActionManager {
         return createSlotAction;
     }
 
+    private final CreateFastSlotAction createFastSlotAction = new CreateFastSlotAction();
+
+    public CreateFastSlotAction getCreateFastSlotAction() {
+        return createFastSlotAction;
+    }
 }

@@ -47,7 +47,7 @@ public class Workspace implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Workspace{name='%s', children=%s}", name, children);
+        return String.format("Workspace{name='%s'}", name);
     }
 
 }

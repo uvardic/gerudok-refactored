@@ -69,6 +69,6 @@ public class Page implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Page{name='%s', parent=%s, children=%s}", name, parent, children);
+        return String.format("Page{name='%s', parent=%s}", name, parent);
     }
 }

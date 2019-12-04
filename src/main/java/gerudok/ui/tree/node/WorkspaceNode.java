@@ -42,6 +42,7 @@ public class WorkspaceNode implements Node {
         JPopupMenu popupMenu = new JPopupMenu();
 
         popupMenu.add(ActionManager.getInstance().getCreateProjectAction());
+        popupMenu.add(ActionManager.getInstance().getCreateFastSlotAction());
 
         return popupMenu;
     }

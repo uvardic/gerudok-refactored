@@ -65,7 +65,7 @@ public class Project implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Project{name='%s', parent=%s, children=%s}", name, parent, children);
+        return String.format("Project{name='%s', parent=%s}", name, parent);
     }
 
 }

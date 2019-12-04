@@ -69,6 +69,6 @@ public class Diagram implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Diagram{name='%s', parent=%s, children=%s}", name, parent, children);
+        return String.format("Diagram{name='%s', parent=%s}", name, parent);
     }
 }

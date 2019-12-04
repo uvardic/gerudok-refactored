@@ -18,6 +18,7 @@ public class Menu extends JMenuBar {
         fileMenu.add(ActionManager.getInstance().getCreateDiagramAction());
         fileMenu.add(ActionManager.getInstance().getCreatePageAction());
         fileMenu.add(ActionManager.getInstance().getCreateSlotAction());
+        fileMenu.add(ActionManager.getInstance().getCreateFastSlotAction());
 
         return fileMenu;
     }

@@ -127,8 +127,10 @@ public class Desktop extends JDesktopPane implements Subject {
 
         for (int row = 0; row < grid.getRows(); row++) {
             for (int column = 0; column < grid.getColumns(); column++) {
-                frames.get(frameCounter).setSize(frameWidth, frameHeight);
-                frames.get(frameCounter++).setLocation(frameWidth * row, frameHeight * column);
+                if (frameCounter < frames.size()) {
+                    frames.get(frameCounter).setSize(frameWidth, frameHeight);
+                    frames.get(frameCounter++).setLocation(frameWidth * row, frameHeight * column);
+                }
             }
         }
     }

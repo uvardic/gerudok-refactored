@@ -13,7 +13,8 @@ public class Circle extends Device<Circle> {
 
     @Override
     protected Shape defineShape() {
-        return new Ellipse2D.Double(getPositionX(), getPositionY(), getWidth(), getHeight());
+        // Affine transformation matrix sets the position for every shape
+        return new Ellipse2D.Double(0, 0, getWidth(), getHeight());
     }
 
     public static class CircleBuilder extends Device.DeviceBuilder<Circle> {

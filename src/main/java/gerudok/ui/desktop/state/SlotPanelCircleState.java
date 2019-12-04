@@ -21,6 +21,9 @@ public class SlotPanelCircleState implements SlotPanelState {
         if (model.isElementAt(event.getPoint()))
             return;
 
-        new Circle.CircleBuilder(model).name("Circle").build();
+        new Circle.CircleBuilder(model)
+                .name("Circle")
+                .position(event.getPoint())
+                .build();
     }
 }

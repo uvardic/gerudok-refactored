@@ -22,13 +22,11 @@ public class PagePanel extends JPanel implements Subject {
         this.model = model;
 
         initializePagePanel();
-
+        Observer.observerSubject(this);
         Desktop.getInstance().getSelectedDiagramFrame().addPagePanel(this);
     }
 
     private void initializePagePanel() {
-        Observer.observerSubject(this);
-
         setLayout(new BorderLayout());
         add(slotTabbedPane, BorderLayout.CENTER);
     }

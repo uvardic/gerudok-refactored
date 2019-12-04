@@ -4,6 +4,7 @@ import gerudok.model.Element;
 import gerudok.model.Slot;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -52,12 +53,17 @@ public abstract class Device<T extends Device<T>> extends Element {
 
     @Override
     public void paint(Graphics2D graphics2D) {
+        AffineTransform originalTransformationMatrix = graphics2D.getTransform();
+
         initializeGraphics(graphics2D);
         paintShape(graphics2D);
         fillShape(graphics2D);
+
+        graphics2D.setTransform(originalTransformationMatrix);
     }
 
     private void initializeGraphics(Graphics2D graphics2D) {
+        graphics2D.translate(getPositionX(), getPositionY());
         graphics2D.scale(scale, scale);
         graphics2D.rotate(rotation);
     }
@@ -104,7 +110,7 @@ public abstract class Device<T extends Device<T>> extends Element {
 
         private Color strokeColor = Color.BLACK;
 
-        private Color fillColor = Color.BLUE;
+        private Color fillColor = new Color(36, 105, 170);
 
         private String name = "Device";
 

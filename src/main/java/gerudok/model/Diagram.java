@@ -1,6 +1,6 @@
 package gerudok.model;
 
-import gerudok.ui.DiagramFrame;
+import gerudok.ui.desktop.DiagramFrame;
 import gerudok.ui.tree.node.DiagramNode;
 import gerudok.ui.tree.node.PageNode;
 import gerudok.ui.tree.node.ProjectNode;

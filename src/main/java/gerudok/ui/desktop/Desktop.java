@@ -1,4 +1,4 @@
-package gerudok.ui;
+package gerudok.ui.desktop;
 
 import gerudok.model.Diagram;
 import gerudok.observer.Observer;

@@ -1,4 +1,4 @@
-package gerudok.controller;
+package gerudok.controller.tree;
 
 import gerudok.model.Project;
 import gerudok.observer.Observer;

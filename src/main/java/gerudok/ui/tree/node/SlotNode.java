@@ -1,7 +1,7 @@
 package gerudok.ui.tree.node;
 
 import gerudok.model.Slot;
-import gerudok.ui.Desktop;
+import gerudok.ui.desktop.Desktop;
 import gerudok.ui.util.UIIcon;
 
 import javax.swing.*;

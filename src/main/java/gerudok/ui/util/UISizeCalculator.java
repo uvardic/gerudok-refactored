@@ -31,7 +31,7 @@ public class UISizeCalculator {
     }
 
     public static Dimension calculateDiagramFrameMinSize() {
-        return new Dimension(100, 50);
+        return new Dimension(100, 100);
     }
 
     public static Dimension calculateDiagramFrameMaxSize() {

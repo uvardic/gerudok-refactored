@@ -1,4 +1,4 @@
-package gerudok.ui;
+package gerudok.ui.desktop;
 
 import gerudok.model.Page;
 import gerudok.model.Slot;

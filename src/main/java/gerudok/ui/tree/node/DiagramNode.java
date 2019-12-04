@@ -2,7 +2,7 @@ package gerudok.ui.tree.node;
 
 import gerudok.controller.ActionManager;
 import gerudok.model.Diagram;
-import gerudok.ui.Desktop;
+import gerudok.ui.desktop.Desktop;
 import gerudok.ui.util.UIIcon;
 
 import javax.swing.*;

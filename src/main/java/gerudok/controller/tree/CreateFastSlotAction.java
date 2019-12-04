@@ -1,13 +1,13 @@
-package gerudok.controller;
+package gerudok.controller.tree;
 
 import gerudok.model.Diagram;
 import gerudok.model.Page;
 import gerudok.model.Project;
 import gerudok.model.Slot;
 import gerudok.observer.Observer;
-import gerudok.ui.Desktop;
-import gerudok.ui.DiagramFrame;
-import gerudok.ui.PagePanel;
+import gerudok.ui.desktop.Desktop;
+import gerudok.ui.desktop.DiagramFrame;
+import gerudok.ui.desktop.PagePanel;
 import gerudok.ui.tree.Tree;
 import gerudok.ui.util.UIIcon;
 

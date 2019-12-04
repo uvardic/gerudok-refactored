@@ -1,6 +1,6 @@
 package gerudok.model;
 
-import gerudok.ui.SlotPanel;
+import gerudok.ui.desktop.SlotPanel;
 import gerudok.ui.tree.node.ElementNode;
 import gerudok.ui.tree.node.PageNode;
 import gerudok.ui.tree.node.SlotNode;

@@ -1,8 +1,8 @@
-package gerudok.controller;
+package gerudok.controller.tree;
 
 import gerudok.model.Page;
 import gerudok.observer.Observer;
-import gerudok.ui.DiagramFrame;
+import gerudok.ui.desktop.DiagramFrame;
 import gerudok.ui.Dialog;
 import gerudok.ui.tree.Tree;
 import gerudok.ui.tree.node.DiagramNode;

@@ -1,17 +1,17 @@
 package gerudok.ui.tree.node;
 
-import gerudok.ui.tree.view.TreeCellRenderer;
-
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeNode;
 
 public interface Node extends TreeNode {
 
-    void renderCell(TreeCellRenderer cellRenderer);
-
-    void openMenu();
+    void renderCell(DefaultTreeCellRenderer cellRenderer);
 
     void selectionEvent();
 
     String formatName();
+
+    JPopupMenu createMenu();
 
 }

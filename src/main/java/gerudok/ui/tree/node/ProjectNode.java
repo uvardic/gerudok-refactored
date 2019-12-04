@@ -1,9 +1,11 @@
 package gerudok.ui.tree.node;
 
+import gerudok.controller.ActionManager;
 import gerudok.model.Project;
-import gerudok.ui.tree.view.TreeCellRenderer;
 import gerudok.ui.util.UIIcon;
 
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
 import java.util.Objects;
@@ -23,14 +25,8 @@ public class ProjectNode implements Node {
     }
 
     @Override
-    public void renderCell(TreeCellRenderer cellRenderer) {
+    public void renderCell(DefaultTreeCellRenderer cellRenderer) {
         cellRenderer.setIcon(UIIcon.PROJECT_ICON.loadIcon());
-    }
-
-    @Override
-    public void openMenu() {
-
-
     }
 
     @Override
@@ -39,6 +35,15 @@ public class ProjectNode implements Node {
     @Override
     public String formatName() {
         return model.getName();
+    }
+
+    @Override
+    public JPopupMenu createMenu() {
+        JPopupMenu popupMenu = new JPopupMenu();
+
+        popupMenu.add(ActionManager.getInstance().getCreateDiagramAction());
+
+        return popupMenu;
     }
 
     @Override

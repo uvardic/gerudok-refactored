@@ -5,12 +5,13 @@ import gerudok.observer.Observer;
 import gerudok.observer.Subject;
 import gerudok.ui.tree.node.Node;
 import gerudok.ui.tree.node.WorkspaceNode;
-import gerudok.ui.tree.view.TreeCellRenderer;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -62,6 +63,21 @@ public class Tree extends JTree implements Subject {
 
     }
 
+    private static class TreeCellRenderer extends DefaultTreeCellRenderer {
+
+        @Override
+        public Component getTreeCellRendererComponent(
+                JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus
+        ) {
+            super.getTreeCellRendererComponent(tree, ((Node) value).formatName(), sel, expanded, leaf, row, hasFocus);
+
+            ((Node) value).renderCell(Tree.TreeCellRenderer.this);
+
+            return this;
+        }
+
+    }
+
     private static class TreeController extends MouseAdapter implements TreeSelectionListener {
 
         @Override
@@ -71,7 +87,17 @@ public class Tree extends JTree implements Subject {
 
         @Override
         public void mouseClicked(MouseEvent event) {
+            if (event.getButton() != MouseEvent.BUTTON3)
+                return;
 
+            selectClickedNode(event);
+            instance.getLastSelectedNode()
+                    .createMenu()
+                    .show(event.getComponent(), event.getX(), event.getY());
+        }
+
+        private void selectClickedNode(MouseEvent event) {
+            instance.setSelectionPath(instance.getClosestPathForLocation(event.getX(), event.getY()));
         }
 
     }

@@ -5,6 +5,7 @@ import gerudok.ui.tree.node.ElementNode;
 import gerudok.ui.tree.node.PageNode;
 import gerudok.ui.tree.node.SlotNode;
 
+import java.awt.geom.Point2D;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -65,6 +66,10 @@ public class Slot implements Serializable {
         return children.stream()
                 .map(ElementNode::new)
                 .collect(toList());
+    }
+
+    public boolean isElementAt(Point2D position) {
+        return children.stream().anyMatch(element -> element.isElementAt(position));
     }
 
     @Override

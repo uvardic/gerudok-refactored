@@ -37,6 +37,7 @@ public class DiagramFrame extends JInternalFrame implements Subject {
         setSize(UISizeCalculator.calculateDiagramFrameSize());
         setMinimumSize(UISizeCalculator.calculateDiagramFrameMinSize());
         setMaximumSize(UISizeCalculator.calculateDiagramFrameMaxSize());
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
 
         add(pageTabbedPane, BorderLayout.CENTER);
 

@@ -9,6 +9,7 @@ public class Menu extends JMenuBar {
     // Singleton??
     public Menu() {
         add(createFileMenu());
+        add(createViewMenu());
     }
 
     private JMenu createFileMenu() {
@@ -21,6 +22,16 @@ public class Menu extends JMenuBar {
         fileMenu.add(ActionManager.getInstance().getCreateFastSlotAction());
 
         return fileMenu;
+    }
+
+    private JMenu createViewMenu() {
+        JMenu viewMenu = new JMenu("View");
+
+        viewMenu.add(ActionManager.getInstance().getCascadeFramesAction());
+        viewMenu.add(ActionManager.getInstance().getTileFramesHorizontallyAction());
+        viewMenu.add(ActionManager.getInstance().getTileFramesVerticallyAction());
+
+        return viewMenu;
     }
 
 }

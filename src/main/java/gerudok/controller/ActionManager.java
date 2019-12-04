@@ -1,5 +1,8 @@
 package gerudok.controller;
 
+import gerudok.controller.desktop.CascadeFramesAction;
+import gerudok.controller.desktop.TileFramesHorizontallyAction;
+import gerudok.controller.desktop.TileFramesVerticallyAction;
 import gerudok.controller.tree.*;
 
 public class ActionManager {
@@ -47,5 +50,23 @@ public class ActionManager {
 
     public CreateFastSlotAction getCreateFastSlotAction() {
         return createFastSlotAction;
+    }
+
+    private final CascadeFramesAction cascadeFramesAction = new CascadeFramesAction();
+
+    public CascadeFramesAction getCascadeFramesAction() {
+        return cascadeFramesAction;
+    }
+
+    private final TileFramesHorizontallyAction tileFramesHorizontallyAction = new TileFramesHorizontallyAction();
+
+    public TileFramesHorizontallyAction getTileFramesHorizontallyAction() {
+        return tileFramesHorizontallyAction;
+    }
+
+    private final TileFramesVerticallyAction tileFramesVerticallyAction = new TileFramesVerticallyAction();
+
+    public TileFramesVerticallyAction getTileFramesVerticallyAction() {
+        return tileFramesVerticallyAction;
     }
 }

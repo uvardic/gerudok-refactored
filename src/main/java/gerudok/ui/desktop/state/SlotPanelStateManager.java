@@ -1,6 +1,6 @@
 package gerudok.ui.desktop.state;
 
-import gerudok.model.Slot;
+import gerudok.ui.desktop.SlotPanel;
 
 public class SlotPanelStateManager {
 
@@ -8,8 +8,8 @@ public class SlotPanelStateManager {
 
     private SlotPanelState currentState;
 
-    public SlotPanelStateManager(Slot model) {
-        this.circleState = new SlotPanelCircleState(model);
+    public SlotPanelStateManager(SlotPanel slotPanel) {
+        this.circleState = new SlotPanelCircleState(slotPanel);
 
         currentState = circleState;
     }

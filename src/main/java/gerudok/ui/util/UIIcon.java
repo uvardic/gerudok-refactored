@@ -16,6 +16,7 @@ public enum UIIcon {
     PASTE_ICON("/icon/PasteIcon.png"),
     PROJECT_ICON("/icon/ProjectIcon.png"),
     REDO_ICON("/icon/RedoIcon.png"),
+    REGION_ZOOM_ICON("/icon/RegionZoomIcon.png"),
     SAVE_ICON("/icon/SaveIcon.png"),
     SLOT_ICON("/icon/SlotIcon.png"),
     TILE_H_ICON("/icon/TileHIcon.png"),
@@ -23,8 +24,7 @@ public enum UIIcon {
     UNDO_ICON("/icon/UndoIcon.png"),
     WORKSPACE_ICON("/icon/WorkspaceIcon.png"),
     ZOOM_IN_ICON("/icon/ZoomInIcon.png"),
-    ZOOM_OUT_ICON("/icon/ZoomOutIcon.png"),
-    ZOOM_TO_FIT_ICON("/icon/ZoomToFitIcon.png");
+    ZOOM_OUT_ICON("/icon/ZoomOutIcon.png");
 
     final String iconPath;
 

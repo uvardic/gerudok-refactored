@@ -30,6 +30,9 @@ public class Menu extends JMenuBar {
         viewMenu.add(ActionManager.getInstance().getCascadeFramesAction());
         viewMenu.add(ActionManager.getInstance().getTileFramesHorizontallyAction());
         viewMenu.add(ActionManager.getInstance().getTileFramesVerticallyAction());
+        viewMenu.add(ActionManager.getInstance().getSlotZoomInAction());
+        viewMenu.add(ActionManager.getInstance().getSlotZoomOutAction());
+        viewMenu.add(ActionManager.getInstance().getSlotRegionZoomAction());
 
         return viewMenu;
     }

@@ -9,7 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.unmodifiableList;
 
 public class Desktop extends JDesktopPane implements Subject {
 
@@ -145,6 +148,16 @@ public class Desktop extends JDesktopPane implements Subject {
 
     public SlotPanel getSelectedSlotPanel() {
         return getSelectedPagePanel().getSelectedSlotPanel();
+    }
+
+    public boolean isSlotPaneClosed() {
+        return getSelectedDiagramFrame() == null
+                || getSelectedPagePanel() == null
+                || getSelectedSlotPanel() == null;
+    }
+
+    public List<DiagramFrame> getFrames() {
+        return unmodifiableList(frames);
     }
 
     @Override

@@ -3,6 +3,9 @@ package gerudok.controller;
 import gerudok.controller.desktop.CascadeFramesAction;
 import gerudok.controller.desktop.TileFramesHorizontallyAction;
 import gerudok.controller.desktop.TileFramesVerticallyAction;
+import gerudok.controller.slot.SlotRegionZoomAction;
+import gerudok.controller.slot.SlotZoomInAction;
+import gerudok.controller.slot.SlotZoomOutAction;
 import gerudok.controller.tree.*;
 
 public class ActionManager {
@@ -68,5 +71,23 @@ public class ActionManager {
 
     public TileFramesVerticallyAction getTileFramesVerticallyAction() {
         return tileFramesVerticallyAction;
+    }
+
+    private final SlotZoomInAction slotZoomInAction = new SlotZoomInAction();
+
+    public SlotZoomInAction getSlotZoomInAction() {
+        return slotZoomInAction;
+    }
+
+    private final SlotZoomOutAction slotZoomOutAction = new SlotZoomOutAction();
+
+    public SlotZoomOutAction getSlotZoomOutAction() {
+        return slotZoomOutAction;
+    }
+
+    private final SlotRegionZoomAction slotRegionZoomAction = new SlotRegionZoomAction();
+
+    public SlotRegionZoomAction getSlotRegionZoomAction() {
+        return slotRegionZoomAction;
     }
 }

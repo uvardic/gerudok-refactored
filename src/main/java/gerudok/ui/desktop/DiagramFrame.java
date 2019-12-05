@@ -21,7 +21,7 @@ public class DiagramFrame extends JInternalFrame implements Subject {
 
     private static final int MAX_SCROLL_BAR_VALUE = 300;
 
-    private static final int SCROLL_BAR_EXTENT = 20;
+    private static final int SCROLL_BAR_EXTENT = 40;
 
     private static final int SCROLL_BAR_TRANSLATE_FACTOR = -10;
 
@@ -104,31 +104,31 @@ public class DiagramFrame extends JInternalFrame implements Subject {
         repaint();
     }
 
-    public void adjustScrollBars(int verticalFactor, int horizontalFactor) {
-        adjustVerticalScrollBar(verticalFactor);
-        adjustHorizontalScrollBar(horizontalFactor);
+    public void adjustScrollBarsValue(int verticalFactor, int horizontalFactor) {
+        adjustVerticalScrollBarValue(verticalFactor);
+        adjustHorizontalScrollBarValue(horizontalFactor);
     }
 
-    private void adjustVerticalScrollBar(int verticalFactor) {
-        if (isVerticalScrollBarInBounds(verticalFactor))
+    private void adjustVerticalScrollBarValue(int verticalFactor) {
+        if (isVerticalScrollBarValueInBounds(verticalFactor))
             verticalScrollBar.setValue(
                     verticalScrollBar.getValue() + verticalScrollBar.getUnitIncrement() * verticalFactor
             );
     }
 
-    private boolean isVerticalScrollBarInBounds(int verticalFactor) {
+    private boolean isVerticalScrollBarValueInBounds(int verticalFactor) {
         return (verticalScrollBar.getValue() >= MIN_SCROLL_BAR_VALUE && verticalFactor > 0)
                 || (verticalScrollBar.getValue() <= MAX_SCROLL_BAR_VALUE && verticalFactor < 0);
     }
 
-    private void adjustHorizontalScrollBar(int horizontalFactor) {
-        if (isHorizontalScrollBarInBounds(horizontalFactor))
+    private void adjustHorizontalScrollBarValue(int horizontalFactor) {
+        if (isHorizontalScrollBarValueInBounds(horizontalFactor))
             horizontalScrollBar.setValue(
                     horizontalScrollBar.getValue() + horizontalScrollBar.getUnitIncrement() * horizontalFactor
             );
     }
 
-    private boolean isHorizontalScrollBarInBounds(int horizontalFactor) {
+    private boolean isHorizontalScrollBarValueInBounds(int horizontalFactor) {
         return (horizontalScrollBar.getValue() >= MIN_SCROLL_BAR_VALUE && horizontalFactor > 0)
                 || (horizontalScrollBar.getValue() <= MAX_SCROLL_BAR_VALUE && horizontalFactor < 0);
     }

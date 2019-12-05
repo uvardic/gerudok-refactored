@@ -1,16 +1,17 @@
 package gerudok.ui.desktop.state;
 
-import gerudok.model.Slot;
 import gerudok.model.device.Circle;
+import gerudok.ui.desktop.SlotPanel;
 
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 
 public class SlotPanelCircleState implements SlotPanelState {
 
-    private final Slot model;
+    private final SlotPanel slotPanel;
 
-    public SlotPanelCircleState(Slot model) {
-        this.model = model;
+    public SlotPanelCircleState(SlotPanel slotPanel) {
+        this.slotPanel = slotPanel;
     }
 
     @Override
@@ -18,12 +19,16 @@ public class SlotPanelCircleState implements SlotPanelState {
         if (event.getButton() != MouseEvent.BUTTON1)
             return;
 
-        if (model.isElementAt(event.getPoint()))
+        Point2D mousePosition = event.getPoint();
+
+        slotPanel.transformPosition(mousePosition);
+
+        if (slotPanel.getModel().isElementAt(mousePosition))
             return;
 
-        new Circle.CircleBuilder(model)
+        new Circle.CircleBuilder(slotPanel.getModel())
                 .name("Circle")
-                .position(event.getPoint())
+                .position(mousePosition)
                 .build();
     }
 }

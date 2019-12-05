@@ -1,5 +1,6 @@
 package gerudok.controller.desktop;
 
+import gerudok.ui.Dialog;
 import gerudok.ui.desktop.Desktop;
 import gerudok.ui.util.UIIcon;
 
@@ -19,6 +20,15 @@ public class TileFramesHorizontallyAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        if (Desktop.getInstance().getFrames().size() == 0) {
+            Dialog.errorDialog(
+                    "Tile frames horizontally error!",
+                    "Please open a frame in order to use Tile frames horizontally!"
+            );
+
+            return;
+        }
+
         Desktop.getInstance().tileFramesHorizontally();
     }
 }

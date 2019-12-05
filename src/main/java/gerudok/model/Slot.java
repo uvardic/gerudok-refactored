@@ -1,5 +1,6 @@
 package gerudok.model;
 
+import gerudok.model.device.Device;
 import gerudok.ui.desktop.SlotPanel;
 import gerudok.ui.tree.node.ElementNode;
 import gerudok.ui.tree.node.PageNode;
@@ -65,6 +66,13 @@ public class Slot implements Serializable {
     public List<ElementNode> getChildrenAsNodes() {
         return children.stream()
                 .map(ElementNode::new)
+                .collect(toList());
+    }
+
+    public List<Device<?>> getChildDevices() {
+        return children.stream()
+                .filter(child -> child instanceof Device)
+                .map(child -> (Device<?>) child)
                 .collect(toList());
     }
 

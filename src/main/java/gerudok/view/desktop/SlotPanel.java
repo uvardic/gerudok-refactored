@@ -82,6 +82,14 @@ public class SlotPanel extends JPanel {
         stateManager.startCircleState();
     }
 
+    public void startRectangleState() {
+        stateManager.startRectangleState();
+    }
+
+    public void startTriangleState() {
+        stateManager.startTriangleState();
+    }
+
     @Override
     public String toString() {
         return String.format("SlotPanel{model=%s}", model);

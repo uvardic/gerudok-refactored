@@ -1,6 +1,9 @@
 package gerudok.controller.action;
 
 import gerudok.controller.action.file.*;
+import gerudok.controller.action.palette.SlotPanelCircleStateAction;
+import gerudok.controller.action.palette.SlotPanelRectangleStateAction;
+import gerudok.controller.action.palette.SlotPanelTriangleStateAction;
 import gerudok.controller.action.view.*;
 
 public class ActionProvider {
@@ -44,6 +47,24 @@ public class ActionProvider {
 
     public CreateSlotAction getCreateSlotAction() {
         return createSlotAction;
+    }
+
+    private final SlotPanelCircleStateAction slotPanelCircleStateAction = new SlotPanelCircleStateAction();
+
+    public SlotPanelCircleStateAction getSlotPanelCircleStateAction() {
+        return slotPanelCircleStateAction;
+    }
+
+    private final SlotPanelRectangleStateAction slotPanelRectangleStateAction = new SlotPanelRectangleStateAction();
+
+    public SlotPanelRectangleStateAction getSlotPanelRectangleStateAction() {
+        return slotPanelRectangleStateAction;
+    }
+
+    private final SlotPanelTriangleStateAction slotPanelTriangleStateAction = new SlotPanelTriangleStateAction();
+
+    public SlotPanelTriangleStateAction getSlotPanelTriangleStateAction() {
+        return slotPanelTriangleStateAction;
     }
 
     private final CreateFastSlotAction createFastSlotAction = new CreateFastSlotAction();

@@ -7,7 +7,7 @@ import java.awt.geom.Ellipse2D;
 
 public class Circle extends Device<Circle> {
 
-    public Circle(DeviceBuilder<Circle> builder) {
+    private Circle(DeviceBuilder<Circle> builder) {
         super(builder);
     }
 
@@ -17,9 +17,9 @@ public class Circle extends Device<Circle> {
         return new Ellipse2D.Double(0, 0, getWidth(), getHeight());
     }
 
-    public static class CircleBuilder extends Device.DeviceBuilder<Circle> {
+    public static class Builder extends Device.DeviceBuilder<Circle> {
 
-        public CircleBuilder(Slot parent) {
+        public Builder(Slot parent) {
             super(parent);
         }
 

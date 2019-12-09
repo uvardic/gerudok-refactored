@@ -1,49 +1,87 @@
 package gerudok.model;
 
-import gerudok.ui.tree.node.ElementNode;
-import gerudok.ui.tree.node.SlotNode;
+import gerudok.controller.action.IconLoader;
+import gerudok.model.visitor.TreeNodeModelVisitor;
 
+import javax.swing.*;
+import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.io.Serializable;
+import java.util.Enumeration;
 
-public abstract class Element implements Serializable {
+public abstract class Element implements TreeNodeModel {
 
     private final Slot parent;
 
     private final String name;
 
-    public Element(Slot parent, String name) {
+    protected Element(Slot parent, String name) {
         this.parent = parent;
         this.name = formatName(name);
-        this.parent.addChild(this);
 
-        new ElementNode(this);
+        this.parent.addChild(this);
+    }
+
+    private String formatName(String name) {
+        return String.format("%s - %d", name, parent.getChildCount() + 1);
     }
 
     public abstract void paint(Graphics2D graphics2D);
 
     public abstract boolean isElementAt(Point2D position);
 
-    private String formatName(String name) {
-        return String.format("%s - %d", name, parent.getChildren().size() + 1);
+    @Override
+    public void acceptModelVisitor(TreeNodeModelVisitor visitor) {
+        visitor.visit(this);
     }
 
-    public Slot getParent() {
-        return parent;
-    }
-
+    @Override
     public String getName() {
         return name;
     }
 
-    public SlotNode getParentAsNode() {
-        return new SlotNode(parent);
+    @Override
+    public Icon getIcon() {
+        return IconLoader.ELEMENT_ICON.loadIcon();
+    }
+
+    @Override
+    public TreeNode getChildAt(int childIndex) {
+        return null;
+    }
+
+    @Override
+    public int getChildCount() {
+        return 0;
+    }
+
+    @Override
+    public TreeNode getParent() {
+        return parent;
+    }
+
+    @Override
+    public int getIndex(TreeNode node) {
+        return 0;
+    }
+
+    @Override
+    public boolean getAllowsChildren() {
+        return false;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
+
+    @Override
+    public Enumeration<?> children() {
+        return null;
     }
 
     @Override
     public String toString() {
-        return String.format("Element{name='%s', parent=%s}", name, parent);
+        return String.format("Element{parent='%s', name=%s}", parent, name);
     }
-
 }

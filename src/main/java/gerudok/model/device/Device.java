@@ -180,4 +180,5 @@ public abstract class Device<T extends Device<T>> extends Element {
         public abstract T build();
 
     }
+
 }

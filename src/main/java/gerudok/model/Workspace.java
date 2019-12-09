@@ -1,48 +1,94 @@
 package gerudok.model;
 
-import gerudok.ui.tree.node.ProjectNode;
+import gerudok.controller.action.IconLoader;
+import gerudok.model.observer.Observer;
+import gerudok.model.visitor.TreeNodeModelVisitor;
+import gerudok.view.Tree;
 
-import java.io.Serializable;
-import java.util.LinkedHashSet;
+import javax.swing.*;
+import javax.swing.tree.TreeNode;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
-import java.util.Set;
 
-import static java.util.Collections.unmodifiableSet;
-import static java.util.stream.Collectors.toList;
+import static java.util.Collections.enumeration;
 
-public class Workspace implements Serializable {
+public class Workspace implements TreeNodeModel {
 
     private final String name;
 
-    private final Set<Project> children = new LinkedHashSet<>();
+    private final List<Project> children = new ArrayList<>();
+
+    public Workspace() {
+        this.name = "Workspace";
+    }
 
     public Workspace(String name) {
         this.name = name;
     }
 
+    public void addChild(Project child) {
+        if (child == null)
+            throw new IllegalArgumentException("Child can't be null!");
+
+        if (children.contains(child))
+            throw new IllegalArgumentException("Child is already present!");
+
+        children.add(child);
+        Observer.updateSubject(Tree.class);
+    }
+
+    @Override
+    public void acceptModelVisitor(TreeNodeModelVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
     public String getName() {
         return name;
     }
 
-    void addChild(Project child) {
-        if (child == null)
-            throw new IllegalArgumentException("Child can't be null!");
-
-        children.add(child);
+    @Override
+    public Icon getIcon() {
+        return IconLoader.WORKSPACE_ICON.loadIcon();
     }
 
-    public void removeChild(Project child) {
-        children.remove(child);
+    @Override
+    public Project getChildAt(int childIndex) {
+        return children.get(childIndex);
     }
 
-    public Set<Project> getChildren() {
-        return unmodifiableSet(children);
+    @Override
+    public int getChildCount() {
+        return children.size();
     }
 
-    public List<ProjectNode> getChildrenAsNodes() {
-        return children.stream()
-                .map(ProjectNode::new)
-                .collect(toList());
+    @Override
+    public TreeNode getParent() {
+        return null;
+    }
+
+    @Override
+    public int getIndex(TreeNode node) {
+        if (!(node instanceof Project))
+            throw new IllegalArgumentException("Illegal child instance!");
+
+        return children.indexOf(node);
+    }
+
+    @Override
+    public boolean getAllowsChildren() {
+        return true;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public Enumeration<? extends Project> children() {
+        return enumeration(children);
     }
 
     @Override

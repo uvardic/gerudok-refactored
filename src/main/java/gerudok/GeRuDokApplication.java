@@ -1,11 +1,17 @@
 package gerudok;
 
-import gerudok.ui.MainFrame;
+import gerudok.view.MainFrame;
+
+import java.awt.*;
 
 public class GeRuDokApplication {
 
     public static void main(String[] args) {
-        MainFrame.getInstance();
+        EventQueue.invokeLater(() -> new GeRuDokApplication().start());
+    }
+
+    private void start() {
+        MainFrame.getInstance().setVisible(true);
     }
 
 }

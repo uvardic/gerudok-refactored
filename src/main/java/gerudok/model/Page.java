@@ -1,74 +1,111 @@
 package gerudok.model;
 
-import gerudok.ui.desktop.PagePanel;
-import gerudok.ui.tree.node.DiagramNode;
-import gerudok.ui.tree.node.PageNode;
-import gerudok.ui.tree.node.SlotNode;
+import gerudok.controller.action.IconLoader;
+import gerudok.model.observer.Observer;
+import gerudok.model.visitor.TreeNodeModelVisitor;
+import gerudok.view.Tree;
 
-import java.io.Serializable;
-import java.util.LinkedHashSet;
+import javax.swing.*;
+import javax.swing.tree.TreeNode;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
-import java.util.Set;
 
-import static java.util.Collections.unmodifiableSet;
-import static java.util.stream.Collectors.toList;
+import static java.util.Collections.enumeration;
 
-public class Page implements Serializable {
+public class Page implements TreeNodeModel {
 
     private final Diagram parent;
 
     private final String name;
 
-    private final Set<Slot> children = new LinkedHashSet<>();
+    private final List<Slot> children = new ArrayList<>();
+
+    public Page(Diagram parent) {
+        this.parent = parent;
+        this.name = formatName("Page");
+
+        this.parent.addChild(this);
+    }
 
     public Page(Diagram parent, String name) {
         this.parent = parent;
         this.name = formatName(name);
-        this.parent.addChild(this);
 
-        new PageNode(this);
-        new PagePanel(this);
+        this.parent.addChild(this);
     }
 
     private String formatName(String name) {
-        return String.format("%s - %d", name, parent.getChildren().size() + 1);
+        return String.format("%s - %d", name, parent.getChildCount() + 1);
     }
 
-    public Diagram getParent() {
-        return parent;
+    public void addChild(Slot child) {
+        if (child == null)
+            throw new IllegalArgumentException("Child can't be null!");
+
+        if (children.contains(child))
+            throw new IllegalArgumentException("Child is already present!");
+
+        children.add(child);
+        Observer.updateSubject(Tree.class);
     }
 
+    @Override
+    public void acceptModelVisitor(TreeNodeModelVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
     public String getName() {
         return name;
     }
 
-    public DiagramNode getParentAsNode() {
-        return new DiagramNode(parent);
+    @Override
+    public Icon getIcon() {
+        return IconLoader.PAGE_ICON.loadIcon();
     }
 
-    void addChild(Slot child) {
-        if (child == null)
-            throw new IllegalArgumentException("Child can't be null");
-
-        children.add(child);
+    @Override
+    public Slot getChildAt(int childIndex) {
+        return children.get(childIndex);
     }
 
-    public void removeChild(Slot child) {
-        children.remove(child);
+    @Override
+    public int getChildCount() {
+        return children.size();
     }
 
-    public Set<Slot> getChildren() {
-        return unmodifiableSet(children);
+    @Override
+    public Diagram getParent() {
+        return parent;
     }
 
-    public List<SlotNode> getChildrenAsNodes() {
-        return children.stream()
-                .map(SlotNode::new)
-                .collect(toList());
+    @Override
+    public int getIndex(TreeNode node) {
+        if (!(node instanceof Slot))
+            throw new IllegalArgumentException("Illegal child instance!");
+
+        return children.indexOf(node);
+    }
+
+    @Override
+    public boolean getAllowsChildren() {
+        return true;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return false;
+    }
+
+    @Override
+    public Enumeration<? extends Slot> children() {
+        return enumeration(children);
     }
 
     @Override
     public String toString() {
-        return String.format("Page{name='%s', parent=%s}", name, parent);
+        return String.format("Page{parent='%s', name=%s}", parent, name);
     }
+
 }

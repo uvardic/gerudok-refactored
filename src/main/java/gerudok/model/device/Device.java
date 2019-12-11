@@ -1,5 +1,6 @@
 package gerudok.model.device;
 
+import com.sun.nio.sctp.IllegalReceiveException;
 import gerudok.model.Element;
 import gerudok.model.Slot;
 
@@ -7,6 +8,9 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public abstract class Device<T extends Device<T>> extends Element {
 
@@ -22,31 +26,58 @@ public abstract class Device<T extends Device<T>> extends Element {
 
     private final Dimension size;
 
-    private final Point2D position
-            ;
-    private final Shape shape;
+    private final Point2D position;
+
+    private final int numberOfInputs;
+
+    private final int numberOfOutputs;
 
     private final double scale;
 
     private final double rotation;
 
+    private final List<DeviceIO> inputs = new ArrayList<>();
+
+    private final List<DeviceIO> outputs = new ArrayList<>();
+
+    private final Shape shape;
+
     protected Device(DeviceBuilder<T> builder) {
         super(builder.parent, builder.name);
 
-        this.stroke = builder.stroke;
-        this.strokeColor = builder.strokeColor;
-        this.fillColor = builder.fillColor;
-        this.size = builder.size;
-        this.position = builder.position;
-        this.shape = defineShape();
-        this.scale = builder.scale;
-        this.rotation = builder.rotation;
+        this.stroke          = builder.stroke;
+        this.strokeColor     = builder.strokeColor;
+        this.fillColor       = builder.fillColor;
+        this.size            = builder.size;
+        this.position        = builder.position;
+        this.numberOfInputs  = builder.numberOfInputs;
+        this.numberOfOutputs = builder.numberOfOutputs;
+        this.scale           = builder.scale;
+        this.rotation        = builder.rotation;
+        // last call, subclasses use above parameters to define their shape
+        this.shape           = defineShape();
 
         centerPosition();
+        initializeInputs();
+        initializeOutputs();
     }
 
     private void centerPosition() {
         position.setLocation(position.getX() - size.getWidth() / 2, position.getY() - size.getHeight() / 2);
+    }
+
+    private Dimension getScaledSize() {
+        return new Dimension((int) (size.getWidth() * scale), (int) (size.getHeight() * scale));
+    }
+
+    private void initializeInputs() {
+        IntStream.range(0, numberOfInputs)
+                .forEach(index -> inputs.add(new DeviceIO(this, DeviceIO.Type.INPUT, index)));
+    }
+
+    private void initializeOutputs() {
+        IntStream.range(0, numberOfOutputs)
+                .forEach(index -> outputs.add(new DeviceIO(this, DeviceIO.Type.OUTPUT, index)));
     }
 
     protected abstract Shape defineShape();
@@ -56,27 +87,30 @@ public abstract class Device<T extends Device<T>> extends Element {
         AffineTransform originalTransformationMatrix = graphics2D.getTransform();
 
         initializeGraphics(graphics2D);
-        paintShape(graphics2D);
-        fillShape(graphics2D);
+        graphics2D.draw(shape);
+        graphics2D.fill(shape);
 
         graphics2D.setTransform(originalTransformationMatrix);
+
+        paintInputs(graphics2D);
+        paintOutputs(graphics2D);
     }
 
     private void initializeGraphics(Graphics2D graphics2D) {
         graphics2D.translate(getPositionX(), getPositionY());
         graphics2D.scale(scale, scale);
         graphics2D.rotate(rotation);
-    }
-
-    private void paintShape(Graphics2D graphics2D) {
         graphics2D.setPaint(strokeColor);
         graphics2D.setStroke(stroke);
-        graphics2D.draw(shape);
+        graphics2D.setPaint(fillColor);
     }
 
-    private void fillShape(Graphics2D graphics2D) {
-        graphics2D.setPaint(fillColor);
-        graphics2D.fill(shape);
+    private void paintInputs(Graphics2D graphics2D) {
+        inputs.forEach(input -> input.paint(graphics2D));
+    }
+
+    private void paintOutputs(Graphics2D graphics2D) {
+        outputs.forEach(output -> output.paint(graphics2D));
     }
 
     @Override
@@ -87,11 +121,11 @@ public abstract class Device<T extends Device<T>> extends Element {
     }
 
     public double getWidth() {
-        return size.getWidth();
+        return getScaledSize().getWidth();
     }
 
     public double getHeight() {
-        return size.getHeight();
+        return getScaledSize().getHeight();
     }
 
     public double getPositionX() {
@@ -100,6 +134,32 @@ public abstract class Device<T extends Device<T>> extends Element {
 
     public double getPositionY() {
         return position.getY();
+    }
+
+    public int getNumberOfInputs() {
+        return numberOfInputs;
+    }
+
+    public int getNumberOfOutputs() {
+        return numberOfOutputs;
+    }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "stroke=" + stroke +
+                ", strokeColor=" + strokeColor +
+                ", fillColor=" + fillColor +
+                ", size=" + size +
+                ", position=" + position +
+                ", shape=" + shape +
+                ", numberOfInputs=" + numberOfInputs +
+                ", numberOfOutputs=" + numberOfOutputs +
+                ", scale=" + scale +
+                ", rotation=" + rotation +
+                ", inputs=" + inputs +
+                ", outputs=" + outputs +
+                "}";
     }
 
     public static abstract class DeviceBuilder<T> {
@@ -117,6 +177,10 @@ public abstract class Device<T extends Device<T>> extends Element {
         private Dimension size = new Dimension(50, 50);
 
         private Point2D position = new Point2D.Double(0, 0);
+
+        private int numberOfInputs = 2;
+
+        private int numberOfOutputs = 1;
 
         private double scale = 1;
 
@@ -162,9 +226,27 @@ public abstract class Device<T extends Device<T>> extends Element {
             return this;
         }
 
+        public DeviceBuilder<T> numberOfInputs(int numberOfInputs) {
+            if (numberOfInputs < 0)
+                throw new IllegalReceiveException(String.format("Invalid number of inputs = %d", numberOfInputs));
+
+            this.numberOfInputs = numberOfInputs;
+
+            return this;
+        }
+
+        public DeviceBuilder<T> numberOfOutputs(int numberOfOutputs) {
+            if (numberOfOutputs < 0)
+                throw new IllegalReceiveException(String.format("Invalid number of outputs = %d", numberOfOutputs));
+
+            this.numberOfOutputs = numberOfOutputs;
+
+            return this;
+        }
+
         public DeviceBuilder<T> scale(double scale) {
             if (scale < MIN_SCALING || scale > MAX_SCALING)
-                throw new IllegalArgumentException("Invalid scale value");
+                throw new IllegalArgumentException(String.format("Invalid scale = %f", scale));
 
             this.scale = scale;
 

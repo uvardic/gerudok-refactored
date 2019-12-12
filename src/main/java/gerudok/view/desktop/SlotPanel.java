@@ -2,6 +2,8 @@ package gerudok.view.desktop;
 
 import gerudok.model.Slot;
 import gerudok.model.device.Device;
+import gerudok.model.observer.Observer;
+import gerudok.model.observer.Subject;
 import gerudok.view.desktop.state.SlotPanelState;
 import gerudok.view.desktop.state.SlotPanelStateManager;
 
@@ -14,7 +16,7 @@ import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Objects;
 
-public class SlotPanel extends JPanel {
+public class SlotPanel extends JPanel implements Subject {
 
     private final Slot model;
 
@@ -36,6 +38,8 @@ public class SlotPanel extends JPanel {
         setLayout(new BorderLayout());
 
         add(canvas, BorderLayout.CENTER);
+
+        Observer.addSubject(this);
     }
 
     AffineTransform getTransformationMatrix() {
@@ -46,8 +50,8 @@ public class SlotPanel extends JPanel {
         return model;
     }
 
-    public void transformPosition(Point2D position) {
-        transformations.transformPosition(position);
+    public Point2D transformPosition(Point2D position) {
+        return transformations.transformPosition(position);
     }
 
     public void regionZoom() {
@@ -88,6 +92,16 @@ public class SlotPanel extends JPanel {
 
     public void startTriangleState() {
         stateManager.startTriangleState();
+    }
+
+    public void startLinkState() {
+        stateManager.startLinkState();
+    }
+
+    @Override
+    public void update() {
+        canvas.updateUI();
+        updateUI();
     }
 
     @Override

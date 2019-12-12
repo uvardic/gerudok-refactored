@@ -68,7 +68,7 @@ public class DeviceIO implements Serializable {
         return getPosition().getY();
     }
 
-    private Point2D getPosition() {
+    public Point2D getPosition() {
         switch (type) {
             case INPUT:
                 return calculateInputPosition();

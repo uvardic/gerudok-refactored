@@ -26,12 +26,14 @@ class SlotPanelTransformations {
         this.slotPanel = slotPanel;
     }
 
-    void transformPosition(Point2D position) {
+    Point2D transformPosition(Point2D position) {
         try {
-            transformationMatrix.inverseTransform(position, position);
+            return transformationMatrix.inverseTransform(position, position);
         } catch (NoninvertibleTransformException e) {
             e.printStackTrace();
         }
+
+        return new Point2D.Double();
     }
 
     void regionZoom() {

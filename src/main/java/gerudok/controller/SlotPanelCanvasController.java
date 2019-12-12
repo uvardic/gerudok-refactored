@@ -17,6 +17,16 @@ public class SlotPanelCanvasController extends MouseAdapter {
     }
 
     @Override
+    public void mouseDragged(MouseEvent event) {
+        Desktop.getInstance().getSelectedSlotPanel().getCurrentState().mouseDragged(event);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent event) {
+        Desktop.getInstance().getSelectedSlotPanel().getCurrentState().mouseMoved(event);
+    }
+
+    @Override
     public void mouseWheelMoved(MouseWheelEvent event) {
         DiagramFrame selectedDiagramFrame = Desktop.getInstance().getSelectedDiagramFrame();
 

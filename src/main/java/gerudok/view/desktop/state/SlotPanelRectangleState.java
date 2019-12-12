@@ -20,9 +20,7 @@ public class SlotPanelRectangleState implements SlotPanelState {
         if (event.getButton() != MouseEvent.BUTTON1)
             return;
 
-        Point2D mousePosition = event.getPoint();
-
-        slotPanel.transformPosition(mousePosition);
+        Point2D mousePosition = slotPanel.transformPosition(event.getPoint());
 
         if (slotPanel.getModel().isElementAt(mousePosition))
             return;
@@ -34,5 +32,10 @@ public class SlotPanelRectangleState implements SlotPanelState {
                 .build();
     }
 
+    @Override
+    public void mouseDragged(MouseEvent event) {}
+
+    @Override
+    public void mouseMoved(MouseEvent event) {}
 
 }

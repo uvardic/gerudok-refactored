@@ -54,6 +54,10 @@ public class Slot implements TreeNodeModel {
         Observer.updateSubject(Tree.class);
     }
 
+    public void removeChild(Element child) {
+        children.remove(child);
+    }
+
     public List<Element> getChildren() {
         return unmodifiableList(children);
     }
@@ -67,6 +71,20 @@ public class Slot implements TreeNodeModel {
 
     public boolean isElementAt(Point2D position) {
         return children.stream().anyMatch(element -> element.isElementAt(position));
+    }
+
+    public boolean isDeviceAt(Point2D position) {
+        return children.stream()
+                .filter(element -> element instanceof Device)
+                .anyMatch(device -> device.isElementAt(position));
+    }
+
+    public Device<?> getDeviceAt(Point2D point) {
+        return (Device<?>) children.stream()
+                .filter(element -> element instanceof Device)
+                .filter(element -> element.isElementAt(point))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Device not found for point: %s", point)));
     }
 
     @Override

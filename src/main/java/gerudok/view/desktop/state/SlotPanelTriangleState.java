@@ -3,7 +3,6 @@ package gerudok.view.desktop.state;
 import gerudok.model.device.Triangle;
 import gerudok.view.desktop.SlotPanel;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
@@ -20,9 +19,7 @@ public class SlotPanelTriangleState implements SlotPanelState {
         if (event.getButton() != MouseEvent.BUTTON1)
             return;
 
-        Point2D mousePosition = event.getPoint();
-
-        slotPanel.transformPosition(mousePosition);
+        Point2D mousePosition = slotPanel.transformPosition(event.getPoint());
 
         if (slotPanel.getModel().isElementAt(mousePosition))
             return;
@@ -30,7 +27,13 @@ public class SlotPanelTriangleState implements SlotPanelState {
         new Triangle.Builder(slotPanel.getModel())
                 .name("Triangle")
                 .position(mousePosition)
-//                .size(new Dimension(75, 50))
                 .build();
     }
+
+    @Override
+    public void mouseDragged(MouseEvent event) {}
+
+    @Override
+    public void mouseMoved(MouseEvent event) {}
+
 }

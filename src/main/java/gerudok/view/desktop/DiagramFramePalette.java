@@ -19,6 +19,7 @@ public class DiagramFramePalette extends JToolBar {
         initializeButton(ActionProvider.getInstance().getSlotPanelCircleStateAction());
         initializeButton(ActionProvider.getInstance().getSlotPanelRectangleStateAction());
         initializeButton(ActionProvider.getInstance().getSlotPanelTriangleStateAction());
+        initializeButton(ActionProvider.getInstance().getSlotPanelLinkStateAction());
     }
 
     private void initializeButton(AbstractAction action) {

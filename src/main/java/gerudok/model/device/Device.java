@@ -82,6 +82,62 @@ public abstract class Device<T extends Device<T>> extends Element {
 
     protected abstract Shape defineShape();
 
+    private DeviceIO closestInput;
+
+    public DeviceIO getClosestInputTo(Point2D position) {
+        closestInput = inputs.get(0);
+
+        inputs.stream()
+                .filter(input -> isClosestInput(position, input))
+                .forEach(input -> closestInput = input);
+
+        return closestInput;
+    }
+
+    private boolean isClosestInput(Point2D position, DeviceIO input) {
+        return position.distance(input.getPosition()) < position.distance(closestInput.getPosition());
+    }
+
+    private DeviceIO closestOutput;
+
+    public DeviceIO getClosestOutputTo(Point2D position) {
+        closestOutput = outputs.get(0);
+
+        outputs.stream()
+                .filter(output -> isClosestOutput(position, output))
+                .forEach(output -> closestOutput = output);
+
+        return closestOutput;
+    }
+
+    private boolean isClosestOutput(Point2D position, DeviceIO output) {
+        return position.distance(output.getPosition()) < position.distance(closestOutput.getPosition());
+    }
+
+    public double getWidth() {
+        return getScaledSize().getWidth();
+    }
+
+    public double getHeight() {
+        return getScaledSize().getHeight();
+    }
+
+    public double getPositionX() {
+        return position.getX();
+    }
+
+    public double getPositionY() {
+        return position.getY();
+    }
+
+    public int getNumberOfInputs() {
+        return numberOfInputs;
+    }
+
+    public int getNumberOfOutputs() {
+        return numberOfOutputs;
+    }
+
     @Override
     public void paint(Graphics2D graphics2D) {
         AffineTransform originalTransformationMatrix = graphics2D.getTransform();
@@ -118,30 +174,6 @@ public abstract class Device<T extends Device<T>> extends Element {
         Rectangle2D deviceBounds = new Rectangle2D.Double(getPositionX(), getPositionY(), getWidth(), getHeight());
 
         return deviceBounds.contains(position);
-    }
-
-    public double getWidth() {
-        return getScaledSize().getWidth();
-    }
-
-    public double getHeight() {
-        return getScaledSize().getHeight();
-    }
-
-    public double getPositionX() {
-        return position.getX();
-    }
-
-    public double getPositionY() {
-        return position.getY();
-    }
-
-    public int getNumberOfInputs() {
-        return numberOfInputs;
-    }
-
-    public int getNumberOfOutputs() {
-        return numberOfOutputs;
     }
 
     @Override

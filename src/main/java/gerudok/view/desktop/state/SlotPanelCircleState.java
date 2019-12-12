@@ -19,9 +19,7 @@ public class SlotPanelCircleState implements SlotPanelState {
         if (event.getButton() != MouseEvent.BUTTON1)
             return;
 
-        Point2D mousePosition = event.getPoint();
-
-        slotPanel.transformPosition(mousePosition);
+        Point2D mousePosition = slotPanel.transformPosition(event.getPoint());
 
         if (slotPanel.getModel().isElementAt(mousePosition))
             return;
@@ -31,4 +29,11 @@ public class SlotPanelCircleState implements SlotPanelState {
                 .position(mousePosition)
                 .build();
     }
+
+    @Override
+    public void mouseDragged(MouseEvent event) {}
+
+    @Override
+    public void mouseMoved(MouseEvent event) {}
+
 }

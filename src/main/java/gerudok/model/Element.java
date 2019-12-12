@@ -23,7 +23,18 @@ public abstract class Element implements TreeNodeModel {
     }
 
     private String formatName(String name) {
-        return String.format("%s - %d", name, parent.getChildCount() + 1);
+        return String.format("%s - %d", name, numberOfSameNames(name) + 1);
+    }
+
+    private long numberOfSameNames(String name) {
+        return parent.getChildren()
+                .stream()
+                .filter(element -> plainName(element).equals(name))
+                .count();
+    }
+
+    private String plainName(Element element) {
+        return element.getName().split(" ")[0];
     }
 
     public abstract void paint(Graphics2D graphics2D);

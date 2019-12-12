@@ -2,7 +2,6 @@ package gerudok.view.desktop.state;
 
 import gerudok.model.device.DeviceIO;
 import gerudok.model.link.Link;
-import gerudok.model.observer.Observer;
 import gerudok.view.desktop.SlotPanel;
 
 import java.awt.event.MouseEvent;

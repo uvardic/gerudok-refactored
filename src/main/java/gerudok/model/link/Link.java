@@ -89,7 +89,9 @@ public class Link extends Element {
     }
 
     private void paintSelectionRectangle(Point2D point, Graphics2D graphics2D) {
-        graphics2D.fillRect((int) point.getX(), (int) point.getY(), pointSize, pointSize);
+        graphics2D.fillRect(
+                (int) point.getX() - pointSize / 2, (int) point.getY() - pointSize / 2, pointSize, pointSize
+        );
     }
 
     private void paintInput(Graphics2D graphics2D) {

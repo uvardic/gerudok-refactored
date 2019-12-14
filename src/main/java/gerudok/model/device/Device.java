@@ -3,6 +3,7 @@ package gerudok.model.device;
 import com.sun.nio.sctp.IllegalReceiveException;
 import gerudok.model.Element;
 import gerudok.model.Slot;
+import gerudok.model.device.handle.*;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -43,6 +44,8 @@ public abstract class Device<T extends Device<T>> extends Element {
     private final List<DeviceIO> inputs = new ArrayList<>();
 
     private final List<DeviceIO> outputs = new ArrayList<>();
+
+    private final List<DeviceHandle> handles = new ArrayList<>();
 
     private final Shape shape;
 
@@ -181,6 +184,24 @@ public abstract class Device<T extends Device<T>> extends Element {
         graphics2D.setPaint(selectionStrokeColor);
 
         graphics2D.drawRect((int) getPositionX(), (int) getPositionY(), (int) getWidth(), (int) getHeight());
+
+        paintHandles(graphics2D);
+    }
+
+    private void paintHandles(Graphics2D graphics2D) {
+        initializeHandles();
+        handles.forEach(handle -> handle.paint(graphics2D));
+    }
+
+    private void initializeHandles() {
+        handles.add(new DeviceNorthWestHandle(this));
+        handles.add(new DeviceNorthHandle(this));
+        handles.add(new DeviceNorthEastHandle(this));
+        handles.add(new DeviceWestHandle(this));
+        handles.add(new DeviceEastHandle(this));
+        handles.add(new DeviceSouthWestHandle(this));
+        handles.add(new DeviceSouthHandle(this));
+        handles.add(new DeviceSouthEastHandle(this));
     }
 
     @Override

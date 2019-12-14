@@ -12,6 +12,8 @@ public class SlotPanelStateManager {
 
     private final SlotPanelLinkState linkState;
 
+    private final SlotPanelSelectionState selectionState;
+
     private SlotPanelState currentState;
 
     public SlotPanelStateManager(SlotPanel slotPanel) {
@@ -19,6 +21,7 @@ public class SlotPanelStateManager {
         this.rectangleState = new SlotPanelRectangleState(slotPanel);
         this.triangleState = new SlotPanelTriangleState(slotPanel);
         this.linkState = new SlotPanelLinkState(slotPanel);
+        this.selectionState = new SlotPanelSelectionState(slotPanel);
 
         currentState = linkState;
     }
@@ -41,6 +44,10 @@ public class SlotPanelStateManager {
 
     public void startLinkState() {
         currentState = linkState;
+    }
+
+    public void startSelectionState() {
+        currentState = selectionState;
     }
 
 }

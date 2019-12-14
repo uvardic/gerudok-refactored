@@ -61,7 +61,7 @@ public class SlotPanelLinkState implements SlotPanelState {
     }
 
     private void deleteLink() {
-        slotPanel.getModel().removeChild(link);
+        slotPanel.getModel().removeElement(link);
         link.removeAllPoints();
         link = null;
     }
@@ -80,7 +80,7 @@ public class SlotPanelLinkState implements SlotPanelState {
         if (!isLinkCreated())
             return;
 
-        link.getLastPoint().setLocation(event.getPoint());
+        link.getLastPoint().setLocation(slotPanel.transformPosition(event.getPoint()));
     }
 
     private boolean isLinkCreated() {

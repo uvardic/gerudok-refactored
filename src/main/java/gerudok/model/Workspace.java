@@ -17,7 +17,7 @@ public class Workspace implements TreeNodeModel {
 
     private final String name;
 
-    private final List<Project> children = new ArrayList<>();
+    private final List<Project> projects = new ArrayList<>();
 
     public Workspace() {
         this.name = "Workspace";
@@ -27,14 +27,14 @@ public class Workspace implements TreeNodeModel {
         this.name = name;
     }
 
-    public void addChild(Project child) {
-        if (child == null)
-            throw new IllegalArgumentException("Child can't be null!");
+    public void addProject(Project project) {
+        if (project == null)
+            throw new IllegalArgumentException("Project can't be null!");
 
-        if (children.contains(child))
-            throw new IllegalArgumentException("Child is already present!");
+        if (projects.contains(project))
+            throw new IllegalArgumentException("Project is already present!");
 
-        children.add(child);
+        projects.add(project);
         Observer.updateSubject(Tree.class);
     }
 
@@ -55,12 +55,12 @@ public class Workspace implements TreeNodeModel {
 
     @Override
     public Project getChildAt(int childIndex) {
-        return children.get(childIndex);
+        return projects.get(childIndex);
     }
 
     @Override
     public int getChildCount() {
-        return children.size();
+        return projects.size();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Workspace implements TreeNodeModel {
         if (!(node instanceof Project))
             throw new IllegalArgumentException("Illegal child instance!");
 
-        return children.indexOf(node);
+        return projects.indexOf(node);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class Workspace implements TreeNodeModel {
 
     @Override
     public Enumeration<? extends Project> children() {
-        return enumeration(children);
+        return enumeration(projects);
     }
 
     @Override

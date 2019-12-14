@@ -37,7 +37,7 @@ class SlotPanelTransformations {
     }
 
     void regionZoom() {
-        regionZoomWorker(slotPanel.getModel().getChildDevices());
+        regionZoomWorker(slotPanel.getModel().getDevices());
     }
 
     void regionZoom(List<Device<?>> devices) {

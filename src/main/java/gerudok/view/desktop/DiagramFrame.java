@@ -49,7 +49,6 @@ public class DiagramFrame extends JInternalFrame implements Subject {
 
     private void initializeDiagramFrameComponents() {
         add(pageTabbedPane, BorderLayout.CENTER);
-        add(new DiagramFramePalette(), BorderLayout.NORTH);
         add(scrollPane.getVerticalScrollBar(), BorderLayout.EAST);
         add(scrollPane.getHorizontalScrollBar(), BorderLayout.SOUTH);
     }

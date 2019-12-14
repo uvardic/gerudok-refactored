@@ -15,38 +15,38 @@ import static java.util.Collections.enumeration;
 
 public class Diagram implements TreeNodeModel {
 
-    private final Project parent;
+    private final Project project;
 
     private final String name;
 
-    private final List<Page> children = new ArrayList<>();
+    private final List<Page> pages = new ArrayList<>();
 
-    public Diagram(Project parent) {
-        this.parent = parent;
+    public Diagram(Project project) {
+        this.project = project;
         this.name = formatName("Diagram");
 
-        this.parent.addChild(this);
+        this.project.addDiagram(this);
     }
 
-    public Diagram(Project parent, String name) {
-        this.parent = parent;
+    public Diagram(Project project, String name) {
+        this.project = project;
         this.name = formatName(name);
 
-        this.parent.addChild(this);
+        this.project.addDiagram(this);
     }
 
     private String formatName(String name) {
-        return String.format("%s - %d", name, parent.getChildCount() + 1);
+        return String.format("%s - %d", name, project.getChildCount() + 1);
     }
 
-    public void addChild(Page child) {
-        if (child == null)
-            throw new IllegalArgumentException("Child can't be null!");
+    public void addPage(Page page) {
+        if (page == null)
+            throw new IllegalArgumentException("Page can't be null!");
 
-        if (children.contains(child))
-            throw new IllegalArgumentException("Child is already present!");
+        if (pages.contains(page))
+            throw new IllegalArgumentException("Page is already present!");
 
-        children.add(child);
+        pages.add(page);
         Observer.updateSubject(Tree.class);
     }
 
@@ -67,17 +67,17 @@ public class Diagram implements TreeNodeModel {
 
     @Override
     public Page getChildAt(int childIndex) {
-        return children.get(childIndex);
+        return pages.get(childIndex);
     }
 
     @Override
     public int getChildCount() {
-        return children.size();
+        return pages.size();
     }
 
     @Override
     public Project getParent() {
-        return parent;
+        return project;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Diagram implements TreeNodeModel {
         if (!(node instanceof Page))
             throw new IllegalArgumentException("Illegal child instance!");
 
-        return children.indexOf(node);
+        return pages.indexOf(node);
     }
 
     @Override
@@ -100,12 +100,12 @@ public class Diagram implements TreeNodeModel {
 
     @Override
     public Enumeration<? extends Page> children() {
-        return enumeration(children);
+        return enumeration(pages);
     }
 
     @Override
     public String toString() {
-        return String.format("Diagram{parent='%s', name=%s}", parent, name);
+        return String.format("Diagram{parent='%s', name=%s}", project, name);
     }
 
 }

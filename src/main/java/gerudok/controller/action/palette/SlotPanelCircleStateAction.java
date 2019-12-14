@@ -1,7 +1,6 @@
 package gerudok.controller.action.palette;
 
 import gerudok.controller.action.IconLoader;
-import gerudok.view.Dialog;
 import gerudok.view.desktop.Desktop;
 
 import javax.swing.*;
@@ -16,11 +15,6 @@ public class SlotPanelCircleStateAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (Desktop.getInstance().isSlotPanelClosed()) {
-            Dialog.errorDialog("Circle state error!", "Please open a slot in order to use Circle state!");
-            return;
-        }
-
         Desktop.getInstance().getSelectedSlotPanel().startCircleState();
     }
 

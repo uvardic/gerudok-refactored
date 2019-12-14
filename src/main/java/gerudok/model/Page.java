@@ -15,38 +15,38 @@ import static java.util.Collections.enumeration;
 
 public class Page implements TreeNodeModel {
 
-    private final Diagram parent;
+    private final Diagram diagram;
 
     private final String name;
 
-    private final List<Slot> children = new ArrayList<>();
+    private final List<Slot> slots = new ArrayList<>();
 
-    public Page(Diagram parent) {
-        this.parent = parent;
+    public Page(Diagram diagram) {
+        this.diagram = diagram;
         this.name = formatName("Page");
 
-        this.parent.addChild(this);
+        this.diagram.addPage(this);
     }
 
-    public Page(Diagram parent, String name) {
-        this.parent = parent;
+    public Page(Diagram diagram, String name) {
+        this.diagram = diagram;
         this.name = formatName(name);
 
-        this.parent.addChild(this);
+        this.diagram.addPage(this);
     }
 
     private String formatName(String name) {
-        return String.format("%s - %d", name, parent.getChildCount() + 1);
+        return String.format("%s - %d", name, diagram.getChildCount() + 1);
     }
 
-    public void addChild(Slot child) {
-        if (child == null)
-            throw new IllegalArgumentException("Child can't be null!");
+    public void addSlot(Slot slot) {
+        if (slot == null)
+            throw new IllegalArgumentException("Slot can't be null!");
 
-        if (children.contains(child))
-            throw new IllegalArgumentException("Child is already present!");
+        if (slots.contains(slot))
+            throw new IllegalArgumentException("Slot is already present!");
 
-        children.add(child);
+        slots.add(slot);
         Observer.updateSubject(Tree.class);
     }
 
@@ -67,17 +67,17 @@ public class Page implements TreeNodeModel {
 
     @Override
     public Slot getChildAt(int childIndex) {
-        return children.get(childIndex);
+        return slots.get(childIndex);
     }
 
     @Override
     public int getChildCount() {
-        return children.size();
+        return slots.size();
     }
 
     @Override
     public Diagram getParent() {
-        return parent;
+        return diagram;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Page implements TreeNodeModel {
         if (!(node instanceof Slot))
             throw new IllegalArgumentException("Illegal child instance!");
 
-        return children.indexOf(node);
+        return slots.indexOf(node);
     }
 
     @Override
@@ -100,12 +100,12 @@ public class Page implements TreeNodeModel {
 
     @Override
     public Enumeration<? extends Slot> children() {
-        return enumeration(children);
+        return enumeration(slots);
     }
 
     @Override
     public String toString() {
-        return String.format("Page{parent='%s', name=%s}", parent, name);
+        return String.format("Page{parent='%s', name=%s}", diagram, name);
     }
 
 }

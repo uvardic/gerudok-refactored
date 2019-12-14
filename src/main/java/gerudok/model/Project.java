@@ -15,38 +15,38 @@ import static java.util.Collections.enumeration;
 
 public class Project implements TreeNodeModel {
 
-    private final Workspace parent;
+    private final Workspace workspace;
 
     private final String name;
 
-    private final List<Diagram> children = new ArrayList<>();
+    private final List<Diagram> diagrams = new ArrayList<>();
 
-    public Project(Workspace parent) {
-        this.parent = parent;
+    public Project(Workspace workspace) {
+        this.workspace = workspace;
         this.name = formatName("Project");
 
-        this.parent.addChild(this);
+        this.workspace.addProject(this);
     }
 
-    public Project(Workspace parent, String name) {
-        this.parent = parent;
+    public Project(Workspace workspace, String name) {
+        this.workspace = workspace;
         this.name = formatName(name);
 
-        this.parent.addChild(this);
+        this.workspace.addProject(this);
     }
 
     private String formatName(String name) {
-        return String.format("%s - %d", name, parent.getChildCount() + 1);
+        return String.format("%s - %d", name, workspace.getChildCount() + 1);
     }
 
-    public void addChild(Diagram child) {
-        if (child == null)
-            throw new IllegalArgumentException("Child can't be null!");
+    public void addDiagram(Diagram diagram) {
+        if (diagram == null)
+            throw new IllegalArgumentException("Diagram can't be null!");
 
-        if (children.contains(child))
-            throw new IllegalArgumentException("Child is already present!");
+        if (diagrams.contains(diagram))
+            throw new IllegalArgumentException("Diagram is already present!");
 
-        children.add(child);
+        diagrams.add(diagram);
         Observer.updateSubject(Tree.class);
     }
 
@@ -67,17 +67,17 @@ public class Project implements TreeNodeModel {
 
     @Override
     public Diagram getChildAt(int childIndex) {
-        return children.get(childIndex);
+        return diagrams.get(childIndex);
     }
 
     @Override
     public int getChildCount() {
-        return children.size();
+        return diagrams.size();
     }
 
     @Override
     public Workspace getParent() {
-        return parent;
+        return workspace;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Project implements TreeNodeModel {
         if (!(node instanceof Diagram))
             throw new IllegalArgumentException("Illegal child instance!");
 
-        return children.indexOf(node);
+        return diagrams.indexOf(node);
     }
 
     @Override
@@ -100,12 +100,12 @@ public class Project implements TreeNodeModel {
 
     @Override
     public Enumeration<? extends Diagram> children() {
-        return enumeration(children);
+        return enumeration(diagrams);
     }
 
     @Override
     public String toString() {
-        return String.format("Project{parent='%s', name=%s}", parent, name);
+        return String.format("Project{parent='%s', name=%s}", workspace, name);
     }
 
 }

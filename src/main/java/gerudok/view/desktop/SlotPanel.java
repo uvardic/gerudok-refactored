@@ -38,6 +38,7 @@ public class SlotPanel extends JPanel implements Subject {
         setLayout(new BorderLayout());
 
         add(canvas, BorderLayout.CENTER);
+        add(new SlotPanelPalette(), BorderLayout.EAST);
 
         Observer.addSubject(this);
     }
@@ -96,6 +97,10 @@ public class SlotPanel extends JPanel implements Subject {
 
     public void startLinkState() {
         stateManager.startLinkState();
+    }
+
+    public void startSelectionState() {
+        stateManager.startSelectionState();
     }
 
     @Override

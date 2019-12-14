@@ -22,6 +22,10 @@ public abstract class Device<T extends Device<T>> extends Element {
 
     private final Color strokeColor;
 
+    private final Stroke selectionStroke;
+
+    private final Color selectionStrokeColor;
+
     private final Color fillColor;
 
     private final Dimension size;
@@ -45,17 +49,19 @@ public abstract class Device<T extends Device<T>> extends Element {
     protected Device(DeviceBuilder<T> builder) {
         super(builder.parent, builder.name);
 
-        this.stroke          = builder.stroke;
-        this.strokeColor     = builder.strokeColor;
-        this.fillColor       = builder.fillColor;
-        this.size            = builder.size;
-        this.position        = builder.position;
-        this.numberOfInputs  = builder.numberOfInputs;
-        this.numberOfOutputs = builder.numberOfOutputs;
-        this.scale           = builder.scale;
-        this.rotation        = builder.rotation;
+        this.stroke               = builder.stroke;
+        this.strokeColor          = builder.strokeColor;
+        this.selectionStroke      = builder.selectionStroke;
+        this.selectionStrokeColor = builder.selectionStrokeColor;
+        this.fillColor            = builder.fillColor;
+        this.size                 = builder.size;
+        this.position             = builder.position;
+        this.numberOfInputs       = builder.numberOfInputs;
+        this.numberOfOutputs      = builder.numberOfOutputs;
+        this.scale                = builder.scale;
+        this.rotation             = builder.rotation;
         // last call, subclasses use above parameters to define their shape
-        this.shape           = defineShape();
+        this.shape                = defineShape();
 
         centerPosition();
         initializeInputs();
@@ -170,6 +176,14 @@ public abstract class Device<T extends Device<T>> extends Element {
     }
 
     @Override
+    public void paintSelection(Graphics2D graphics2D) {
+        graphics2D.setStroke(selectionStroke);
+        graphics2D.setPaint(selectionStrokeColor);
+
+        graphics2D.drawRect((int) getPositionX(), (int) getPositionY(), (int) getWidth(), (int) getHeight());
+    }
+
+    @Override
     public boolean isElementAt(Point2D position) {
         Rectangle2D deviceBounds = new Rectangle2D.Double(getPositionX(), getPositionY(), getWidth(), getHeight());
 
@@ -202,6 +216,12 @@ public abstract class Device<T extends Device<T>> extends Element {
 
         private Color strokeColor = Color.BLACK;
 
+        private Stroke selectionStroke = new BasicStroke(
+                1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 1f, new float[] { 3f, 6f }, 0
+        );
+
+        private Color selectionStrokeColor = Color.BLACK;
+
         private Color fillColor = new Color(36, 105, 170);
 
         private String name = "Device";
@@ -230,6 +250,18 @@ public abstract class Device<T extends Device<T>> extends Element {
 
         public DeviceBuilder<T> strokeColor(Color strokeColor) {
             this.strokeColor = strokeColor;
+
+            return this;
+        }
+
+        public DeviceBuilder<T> selectionStroke(Stroke selectionStroke) {
+            this.selectionStroke = selectionStroke;
+
+            return this;
+        }
+
+        public DeviceBuilder<T> selectionStrokeColor(Color selectionStrokeColor) {
+            this.selectionStrokeColor = selectionStrokeColor;
 
             return this;
         }

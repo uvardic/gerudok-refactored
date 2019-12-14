@@ -17,10 +17,6 @@ public class Link extends Element {
 
     private final Color lineStrokeColor;
 
-    private final Stroke arrowStroke;
-
-    private final Color arrowStrokeColor;
-
     private final int pointSize;
 
     private final List<Point2D> points = new ArrayList<>();
@@ -33,8 +29,6 @@ public class Link extends Element {
         this.output           = builder.output;
         this.lineStroke       = builder.lineStroke;
         this.lineStrokeColor  = builder.lineStrokeColor;
-        this.arrowStroke      = builder.arrowStroke;
-        this.arrowStrokeColor = builder.arrowStrokeColor;
         this.pointSize        = builder.pointSize;
 
         addPoint(output.getPosition());
@@ -74,7 +68,9 @@ public class Link extends Element {
 
         previousPoint = output.getPosition();
         points.forEach(point -> paintPoint(point, graphics2D));
-        paintInput(graphics2D);
+
+        if (input != null)
+            paintInput(graphics2D);
     }
 
     private void paintPoint(Point2D point, Graphics2D graphics2D) {
@@ -95,11 +91,15 @@ public class Link extends Element {
     }
 
     private void paintInput(Graphics2D graphics2D) {
-        if (input != null)
-            graphics2D.drawLine(
-                    (int) previousPoint.getX(), (int) previousPoint.getY(),
-                    (int) input.getPositionX(), (int) input.getPositionY()
-            );
+        graphics2D.drawLine(
+                (int) previousPoint.getX(), (int) previousPoint.getY(),
+                (int) input.getPositionX(), (int) input.getPositionY()
+        );
+    }
+
+    @Override
+    public void paintSelection(Graphics2D graphics2D) {
+
     }
 
     @Override
@@ -118,10 +118,6 @@ public class Link extends Element {
         private Stroke lineStroke = new BasicStroke((2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL);
 
         private Color lineStrokeColor = Color.BLACK;
-
-        private Stroke arrowStroke = new BasicStroke((2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL);
-
-        private Color arrowStrokeColor = Color.BLACK;
 
         private int pointSize = 5;
 
@@ -144,18 +140,6 @@ public class Link extends Element {
 
         public Builder lineStrokeColor(Color lineStrokeColor) {
             this.lineStrokeColor = lineStrokeColor;
-
-            return this;
-        }
-
-        public Builder arrowStroke(Stroke arrowStroke) {
-            this.arrowStroke = arrowStroke;
-
-            return this;
-        }
-
-        public Builder arrowStrokeColor(Color arrowStrokeColor) {
-            this.arrowStrokeColor = arrowStrokeColor;
 
             return this;
         }

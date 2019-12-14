@@ -35,7 +35,7 @@ class SlotPanelCanvas extends JPanel  {
 
         Graphics2D graphics2D = initializeGraphics(graphics);
 
-        paintElements(graphics2D);
+        slotPanel.getModel().paintElements(graphics2D);
     }
 
     private Graphics2D initializeGraphics(Graphics graphics) {
@@ -48,8 +48,4 @@ class SlotPanelCanvas extends JPanel  {
         return graphics2D;
     }
 
-    private void paintElements(Graphics2D graphics) {
-        slotPanel.getModel().getChildren().forEach(element -> element.paint(graphics));
-        repaint();
-    }
 }

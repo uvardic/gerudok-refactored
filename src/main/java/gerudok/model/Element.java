@@ -19,7 +19,7 @@ public abstract class Element implements TreeNodeModel {
         this.parent = parent;
         this.name = formatName(name);
 
-        this.parent.addChild(this);
+        this.parent.addElement(this);
     }
 
     private String formatName(String name) {
@@ -27,7 +27,7 @@ public abstract class Element implements TreeNodeModel {
     }
 
     private long numberOfSameNames(String name) {
-        return parent.getChildren()
+        return parent.getElements()
                 .stream()
                 .filter(element -> plainName(element).equals(name))
                 .count();
@@ -38,6 +38,8 @@ public abstract class Element implements TreeNodeModel {
     }
 
     public abstract void paint(Graphics2D graphics2D);
+
+    public abstract void paintSelection(Graphics2D graphics2D);
 
     public abstract boolean isElementAt(Point2D position);
 

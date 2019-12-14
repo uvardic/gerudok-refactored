@@ -1,7 +1,6 @@
 package gerudok.controller.action.palette;
 
 import gerudok.controller.action.IconLoader;
-import gerudok.view.Dialog;
 import gerudok.view.desktop.Desktop;
 
 import javax.swing.*;
@@ -16,11 +15,6 @@ public class SlotPanelLinkStateAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (Desktop.getInstance().isSlotPanelClosed()) {
-            Dialog.errorDialog("Link state error!", "Please open a slot in order to use Link state!");
-            return;
-        }
-
         Desktop.getInstance().getSelectedSlotPanel().startLinkState();
     }
 }

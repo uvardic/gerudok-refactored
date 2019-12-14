@@ -5,9 +5,11 @@ import gerudok.model.device.Device;
 import gerudok.model.observer.Observer;
 import gerudok.model.visitor.TreeNodeModelVisitor;
 import gerudok.view.Tree;
+import gerudok.view.desktop.SlotPanel;
 
 import javax.swing.*;
 import javax.swing.tree.TreeNode;
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -19,72 +21,116 @@ import static java.util.stream.Collectors.toList;
 
 public class Slot implements TreeNodeModel {
 
-    private final Page parent;
+    private final Page page;
 
     private final String name;
 
-    private final List<Element> children = new ArrayList<>();
+    private final List<Element> elements = new ArrayList<>();
 
-    public Slot(Page parent) {
-        this.parent = parent;
+    private final List<Element> selectedElements = new ArrayList<>();
+
+    public Slot(Page page) {
+        this.page = page;
         this.name = formatName("Slot");
 
-        this.parent.addChild(this);
+        this.page.addSlot(this);
     }
 
-    public Slot(Page parent, String name) {
-        this.parent = parent;
+    public Slot(Page page, String name) {
+        this.page = page;
         this.name = formatName(name);
 
-        this.parent.addChild(this);
+        this.page.addSlot(this);
     }
 
     private String formatName(String name) {
-        return String.format("%s - %d", name, parent.getChildCount() + 1);
+        return String.format("%s - %d", name, page.getChildCount() + 1);
     }
 
-    public void addChild(Element child) {
-        if (child == null)
-            throw new IllegalArgumentException("Child can't be null!");
+    public void addElement(Element element) {
+        if (element == null)
+            throw new IllegalArgumentException("Element can't be null!");
 
-        if (children.contains(child))
-            throw new IllegalArgumentException("Child is already present!");
+        if (elements.contains(element))
+            throw new IllegalArgumentException("Element is already present!");
 
-        children.add(child);
+        elements.add(element);
         Observer.updateSubject(Tree.class);
     }
 
-    public void removeChild(Element child) {
-        children.remove(child);
+    public void removeElement(Element element) {
+        elements.remove(element);
     }
 
-    public List<Element> getChildren() {
-        return unmodifiableList(children);
+    List<Element> getElements() {
+        return unmodifiableList(elements);
     }
 
-    public List<Device<?>> getChildDevices() {
-        return children.stream()
-                .filter(child -> child instanceof Device)
-                .map(child -> (Device<?>) child)
-                .collect(toList());
+    public void paintElements(Graphics2D graphics2D) {
+        elements.forEach(element -> element.paint(graphics2D));
+        selectedElements.forEach(selectedElement -> selectedElement.paintSelection(graphics2D));
+        Observer.updateSubject(SlotPanel.class);
     }
 
     public boolean isElementAt(Point2D position) {
-        return children.stream().anyMatch(element -> element.isElementAt(position));
+        return elements.stream().anyMatch(element -> element.isElementAt(position));
+    }
+
+    public Element getElementAt(Point2D position) {
+        return elements.stream()
+                .filter(element -> element.isElementAt(position))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("Element not found for position: %s", position)
+                ));
+    }
+
+    public List<Device<?>> getDevices() {
+        return elements.stream()
+                .filter(element -> element instanceof Device)
+                .map(element -> (Device<?>) element)
+                .collect(toList());
     }
 
     public boolean isDeviceAt(Point2D position) {
-        return children.stream()
+        return elements.stream()
                 .filter(element -> element instanceof Device)
                 .anyMatch(device -> device.isElementAt(position));
     }
 
-    public Device<?> getDeviceAt(Point2D point) {
-        return (Device<?>) children.stream()
+    public Device<?> getDeviceAt(Point2D position) {
+        return (Device<?>) elements.stream()
                 .filter(element -> element instanceof Device)
-                .filter(element -> element.isElementAt(point))
+                .filter(element -> element.isElementAt(position))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Device not found for point: %s", point)));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("Device not found for position: %s", position)
+                ));
+    }
+
+    public void selectElement(Element element) {
+        if (element == null)
+            throw new IllegalArgumentException("Element can't be null!");
+
+        if (selectedElements.contains(element))
+            throw new IllegalArgumentException("Element is already selected!");
+
+        selectedElements.add(element);
+        Observer.updateSubject(SlotPanel.class);
+    }
+
+    public void deselectElement(Element element) {
+        selectedElements.remove(element);
+        Observer.updateSubject(SlotPanel.class);
+    }
+
+    public void deselectAllElements() {
+        selectedElements.clear();
+        Observer.updateSubject(SlotPanel.class);
+    }
+
+    public boolean isElementSelected(Element element) {
+        return selectedElements.contains(element);
     }
 
     @Override
@@ -104,17 +150,17 @@ public class Slot implements TreeNodeModel {
 
     @Override
     public Element getChildAt(int childIndex) {
-        return children.get(childIndex);
+        return elements.get(childIndex);
     }
 
     @Override
     public int getChildCount() {
-        return children.size();
+        return elements.size();
     }
 
     @Override
     public Page getParent() {
-        return parent;
+        return page;
     }
 
     @Override
@@ -122,7 +168,7 @@ public class Slot implements TreeNodeModel {
         if (!(node instanceof Element))
             throw new IllegalArgumentException("Illegal child instance!");
 
-        return children.indexOf(node);
+        return elements.indexOf(node);
     }
 
     @Override
@@ -137,12 +183,12 @@ public class Slot implements TreeNodeModel {
 
     @Override
     public Enumeration<? extends Element> children() {
-        return enumeration(children);
+        return enumeration(elements);
     }
 
     @Override
     public String toString() {
-        return String.format("Slot{parent='%s', name=%s}", parent, name);
+        return String.format("Slot{parent='%s', name=%s}", page, name);
     }
 
 }

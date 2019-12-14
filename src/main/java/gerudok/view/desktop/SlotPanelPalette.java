@@ -4,12 +4,12 @@ import gerudok.controller.action.ActionProvider;
 
 import javax.swing.*;
 
-public class DiagramFramePalette extends JToolBar {
+public class SlotPanelPalette extends JToolBar {
 
     private final ButtonGroup buttonGroup = new ButtonGroup();
 
-    public DiagramFramePalette() {
-        super(HORIZONTAL);
+    public SlotPanelPalette() {
+        super(VERTICAL);
 
         initializePalette();
     }
@@ -20,6 +20,7 @@ public class DiagramFramePalette extends JToolBar {
         initializeButton(ActionProvider.getInstance().getSlotPanelRectangleStateAction());
         initializeButton(ActionProvider.getInstance().getSlotPanelTriangleStateAction());
         initializeButton(ActionProvider.getInstance().getSlotPanelLinkStateAction());
+        initializeButton(ActionProvider.getInstance().getSlotPanelSelectionStateAction());
     }
 
     private void initializeButton(AbstractAction action) {

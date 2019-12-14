@@ -6,10 +6,13 @@ import gerudok.model.device.DeviceIO;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Link extends Element {
+
+    private static final int HANDLE_SIZE = 7;
 
     private final DeviceIO output;
 
@@ -55,36 +58,32 @@ public class Link extends Element {
         points.clear();
     }
 
-    @Override
-    public void paint(Graphics2D graphics2D) {
-        paintPoints(graphics2D);
-    }
-
     private Point2D previousPoint;
 
-    private void paintPoints(Graphics2D graphics2D) {
+    @Override
+    public void paint(Graphics2D graphics2D) {
         graphics2D.setStroke(lineStroke);
         graphics2D.setPaint(lineStrokeColor);
 
         previousPoint = output.getPosition();
-        points.forEach(point -> paintPoint(point, graphics2D));
+        points.forEach(point -> paintLink(point, graphics2D));
 
         if (input != null)
             paintInput(graphics2D);
     }
 
-    private void paintPoint(Point2D point, Graphics2D graphics2D) {
+    private void paintLink(Point2D point, Graphics2D graphics2D) {
         graphics2D.drawLine(
                 (int) previousPoint.getX(), (int) previousPoint.getY(),
                 (int) point.getX(), (int) point.getY()
         );
 
-        paintSelectionRectangle(point, graphics2D);
+        paintPoint(point, graphics2D);
 
         previousPoint = point;
     }
 
-    private void paintSelectionRectangle(Point2D point, Graphics2D graphics2D) {
+    private void paintPoint(Point2D point, Graphics2D graphics2D) {
         graphics2D.fillRect(
                 (int) point.getX() - pointSize / 2, (int) point.getY() - pointSize / 2, pointSize, pointSize
         );
@@ -99,12 +98,35 @@ public class Link extends Element {
 
     @Override
     public void paintSelection(Graphics2D graphics2D) {
+        graphics2D.setPaint(Color.BLACK);
 
+        points.forEach(point -> paintPointHandle(point, graphics2D));
+    }
+
+    private void paintPointHandle(Point2D point, Graphics2D graphics2D) {
+        graphics2D.fillRect(
+                (int) point.getX() - HANDLE_SIZE / 2,
+                (int) point.getY() - HANDLE_SIZE / 2,
+                HANDLE_SIZE, HANDLE_SIZE
+        );
     }
 
     @Override
     public boolean isElementAt(Point2D position) {
-        return false;
+        if (input == null)
+            return false;
+
+        return points.stream().anyMatch(point -> isPositionInPointBounds(position, point));
+    }
+
+    private boolean isPositionInPointBounds(Point2D position, Point2D point) {
+        Rectangle2D pointBounds = new Rectangle2D.Double(
+                point.getX() - (double) pointSize / 2,
+                point.getY() - (double) pointSize / 2,
+                pointSize, pointSize
+        );
+
+        return pointBounds.contains(position);
     }
 
     public static class Builder {

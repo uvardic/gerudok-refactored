@@ -103,6 +103,14 @@ public class SlotPanel extends JPanel implements Subject {
         stateManager.startSelectionState();
     }
 
+    public void startMoveState() {
+        stateManager.startMoveState();
+    }
+
+    public void setCanvasCursor(Cursor cursor) {
+        canvas.setCursor(cursor);
+    }
+
     @Override
     public void update() {
         canvas.updateUI();

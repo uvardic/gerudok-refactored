@@ -58,6 +58,22 @@ public class Link extends Element {
         points.clear();
     }
 
+    private Point2D closestPoint;
+
+    public Point2D getPointClosestTo(Point2D position) {
+        closestPoint = points.get(0);
+
+        points.stream()
+                .filter(point -> isClosestPoint(position, point))
+                .forEach(point -> closestPoint = point);
+
+        return closestPoint;
+    }
+
+    private boolean isClosestPoint(Point2D position, Point2D point) {
+        return position.distance(point) < position.distance(closestPoint);
+    }
+
     private Point2D previousPoint;
 
     @Override

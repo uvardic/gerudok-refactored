@@ -10,18 +10,22 @@ public class SlotPanelSelectionState implements SlotPanelState {
 
     private final SlotPanel slotPanel;
 
+    private int pressedMouseButton = -1;
+
     public SlotPanelSelectionState(SlotPanel slotPanel) {
         this.slotPanel = slotPanel;
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
-        if (event.getButton() != MouseEvent.BUTTON1)
+        pressedMouseButton = event.getButton();
+
+        if (pressedMouseButton != MouseEvent.BUTTON1)
             return;
 
         Point2D mousePosition = slotPanel.transformPosition(event.getPoint());
 
-        if (noElementIsSelected(mousePosition)) {
+        if (notElementAt(mousePosition)) {
             slotPanel.getModel().deselectAllElements();
             return;
         }
@@ -37,7 +41,7 @@ public class SlotPanelSelectionState implements SlotPanelState {
             selectOnly(element);
     }
 
-    private boolean noElementIsSelected(Point2D mousePosition) {
+    private boolean notElementAt(Point2D mousePosition) {
         return !slotPanel.getModel().isElementAt(mousePosition);
     }
 
@@ -47,8 +51,17 @@ public class SlotPanelSelectionState implements SlotPanelState {
     }
 
     @Override
-    public void mouseDragged(MouseEvent event) {
+    public void mouseReleased(MouseEvent event) {}
 
+    @Override
+    public void mouseDragged(MouseEvent event) {
+        if (pressedMouseButton != MouseEvent.BUTTON1)
+            return;
+
+        Point2D mousePosition = slotPanel.transformPosition(event.getPoint());
+
+        if (slotPanel.getModel().isElementAt(mousePosition))
+            slotPanel.startMoveState();
     }
 
     @Override

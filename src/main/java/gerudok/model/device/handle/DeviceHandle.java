@@ -5,6 +5,7 @@ import gerudok.model.device.Device;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Objects;
 
 public abstract class DeviceHandle {
 
@@ -47,5 +48,22 @@ public abstract class DeviceHandle {
     @Override
     public String toString() {
         return String.format("DeviceHandle{device=%s, position=%s, handleBounds=%s}", device, position, handleBounds);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof DeviceHandle) {
+            DeviceHandle other = (DeviceHandle) o;
+
+            return Objects.equals(this.device, other.device) &&
+                    Objects.equals(this.position, other.position);
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(device, position);
     }
 }

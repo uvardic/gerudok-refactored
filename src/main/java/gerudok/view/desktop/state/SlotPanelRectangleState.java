@@ -33,6 +33,9 @@ public class SlotPanelRectangleState implements SlotPanelState {
     }
 
     @Override
+    public void mouseReleased(MouseEvent event) {}
+
+    @Override
     public void mouseDragged(MouseEvent event) {}
 
     @Override

@@ -14,14 +14,17 @@ public class SlotPanelStateManager {
 
     private final SlotPanelSelectionState selectionState;
 
+    private final SlotPanelMoveState moveState;
+
     private SlotPanelState currentState;
 
     public SlotPanelStateManager(SlotPanel slotPanel) {
-        this.circleState = new SlotPanelCircleState(slotPanel);
+        this.circleState    = new SlotPanelCircleState(slotPanel);
         this.rectangleState = new SlotPanelRectangleState(slotPanel);
-        this.triangleState = new SlotPanelTriangleState(slotPanel);
-        this.linkState = new SlotPanelLinkState(slotPanel);
+        this.triangleState  = new SlotPanelTriangleState(slotPanel);
+        this.linkState      = new SlotPanelLinkState(slotPanel);
         this.selectionState = new SlotPanelSelectionState(slotPanel);
+        this.moveState      = new SlotPanelMoveState(slotPanel);
 
         currentState = linkState;
     }
@@ -48,6 +51,10 @@ public class SlotPanelStateManager {
 
     public void startSelectionState() {
         currentState = selectionState;
+    }
+
+    public void startMoveState() {
+        currentState = moveState;
     }
 
 }

@@ -67,6 +67,9 @@ public class SlotPanelLinkState implements SlotPanelState {
     }
 
     @Override
+    public void mouseReleased(MouseEvent event) {}
+
+    @Override
     public void mouseDragged(MouseEvent event) {
         moveLastLinkPoint(event);
     }

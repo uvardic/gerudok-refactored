@@ -66,9 +66,14 @@ public abstract class Device<T extends Device<T>> extends Element {
         // last call, subclasses use above parameters to define their shape
         this.shape                = defineShape();
 
+        initializeDevice();
+    }
+
+    private void initializeDevice() {
         centerPosition();
         initializeInputs();
         initializeOutputs();
+        initializeHandles();
     }
 
     private void centerPosition() {
@@ -87,6 +92,17 @@ public abstract class Device<T extends Device<T>> extends Element {
     private void initializeOutputs() {
         IntStream.range(0, numberOfOutputs)
                 .forEach(index -> outputs.add(new DeviceIO(this, DeviceIO.Type.OUTPUT, index)));
+    }
+
+    private void initializeHandles() {
+        handles.add(new DeviceNorthWestHandle(this));
+        handles.add(new DeviceNorthHandle(this));
+        handles.add(new DeviceNorthEastHandle(this));
+        handles.add(new DeviceWestHandle(this));
+        handles.add(new DeviceEastHandle(this));
+        handles.add(new DeviceSouthWestHandle(this));
+        handles.add(new DeviceSouthHandle(this));
+        handles.add(new DeviceSouthEastHandle(this));
     }
 
     protected abstract Shape defineShape();
@@ -139,6 +155,16 @@ public abstract class Device<T extends Device<T>> extends Element {
         return position.getY();
     }
 
+    public void setPosition(double x, double y) {
+        position.setLocation(x, y);
+        reinitializeHandles();
+    }
+
+    private void reinitializeHandles() {
+        handles.clear();
+        initializeHandles();
+    }
+
     public int getNumberOfInputs() {
         return numberOfInputs;
     }
@@ -189,19 +215,7 @@ public abstract class Device<T extends Device<T>> extends Element {
     }
 
     private void paintHandles(Graphics2D graphics2D) {
-        initializeHandles();
         handles.forEach(handle -> handle.paint(graphics2D));
-    }
-
-    private void initializeHandles() {
-        handles.add(new DeviceNorthWestHandle(this));
-        handles.add(new DeviceNorthHandle(this));
-        handles.add(new DeviceNorthEastHandle(this));
-        handles.add(new DeviceWestHandle(this));
-        handles.add(new DeviceEastHandle(this));
-        handles.add(new DeviceSouthWestHandle(this));
-        handles.add(new DeviceSouthHandle(this));
-        handles.add(new DeviceSouthEastHandle(this));
     }
 
     @Override

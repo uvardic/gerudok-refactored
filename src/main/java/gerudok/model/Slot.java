@@ -2,6 +2,7 @@ package gerudok.model;
 
 import gerudok.controller.action.IconLoader;
 import gerudok.model.device.Device;
+import gerudok.model.link.Link;
 import gerudok.model.observer.Observer;
 import gerudok.model.visitor.TreeNodeModelVisitor;
 import gerudok.view.Tree;
@@ -131,6 +132,20 @@ public class Slot implements TreeNodeModel {
 
     public boolean isElementSelected(Element element) {
         return selectedElements.contains(element);
+    }
+
+    public List<Device<?>> getSelectedDevices() {
+        return selectedElements.stream()
+                .filter(element -> element instanceof Device<?>)
+                .map(element -> (Device<?>) element)
+                .collect(toList());
+    }
+
+    public List<Link> getSelectedLinks() {
+        return selectedElements.stream()
+                .filter(element -> element instanceof Link)
+                .map(element -> (Link) element)
+                .collect(toList());
     }
 
     @Override

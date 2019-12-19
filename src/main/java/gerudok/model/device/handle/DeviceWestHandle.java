@@ -2,6 +2,7 @@ package gerudok.model.device.handle;
 
 import gerudok.model.device.Device;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class DeviceWestHandle extends DeviceHandle {
@@ -18,4 +19,8 @@ public class DeviceWestHandle extends DeviceHandle {
         );
     }
 
+    @Override
+    protected Cursor defineCursor() {
+        return new Cursor(Cursor.W_RESIZE_CURSOR);
+    }
 }

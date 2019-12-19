@@ -1,8 +1,10 @@
 package gerudok.view.desktop.state;
 
 import gerudok.model.Element;
+import gerudok.model.device.handle.DeviceHandle;
 import gerudok.view.desktop.SlotPanel;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
@@ -66,7 +68,28 @@ public class SlotPanelSelectionState implements SlotPanelState {
 
     @Override
     public void mouseMoved(MouseEvent event) {
+        Point2D mousePosition = slotPanel.transformPosition(event.getPoint());
 
+        if (isDeviceHandleAt(mousePosition))
+            slotPanel.setCanvasCursor(getDeviceHandle(mousePosition).getCursor());
+        else
+            slotPanel.setCanvasCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
+    private boolean isDeviceHandleAt(Point2D mousePosition) {
+        return slotPanel.getModel()
+                .getSelectedDevices()
+                .stream()
+                .anyMatch(device -> device.isHandleAt(mousePosition));
+    }
+
+    private DeviceHandle getDeviceHandle(Point2D mousePosition) {
+        return slotPanel.getModel().getSelectedDevices()
+                .stream()
+                .filter(device -> device.isHandleAt(mousePosition))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new)
+                .getHandleAt(mousePosition);
     }
 
 }

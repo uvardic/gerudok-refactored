@@ -139,6 +139,17 @@ public abstract class Device<T extends Device<T>> extends Element {
         return position.distance(output.getPosition()) < position.distance(closestOutput.getPosition());
     }
 
+    public boolean isHandleAt(Point2D position) {
+        return handles.stream().anyMatch(handle -> handle.isHandleAt(position));
+    }
+
+    public DeviceHandle getHandleAt(Point2D position) {
+        return handles.stream()
+                .filter(handle -> handle.isHandleAt(position))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No handles found!"));
+    }
+
     public double getWidth() {
         return getScaledSize().getWidth();
     }

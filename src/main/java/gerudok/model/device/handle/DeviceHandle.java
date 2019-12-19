@@ -17,13 +17,18 @@ public abstract class DeviceHandle {
 
     private final Rectangle2D handleBounds;
 
+    private final Cursor cursor;
+
     protected DeviceHandle(Device<?> device) {
         this.device = device;
         this.position = definePosition();
         this.handleBounds = defineHandleBounds();
+        this.cursor = defineCursor();
     }
 
     protected abstract Point2D definePosition();
+
+    protected abstract Cursor defineCursor();
 
     private Rectangle2D defineHandleBounds() {
         double rectanglePointX = position.getX() - (double) HANDLE_SIZE / 2;
@@ -43,6 +48,10 @@ public abstract class DeviceHandle {
 
     public boolean isHandleAt(Point2D position) {
         return handleBounds.contains(position);
+    }
+
+    public Cursor getCursor() {
+        return cursor;
     }
 
     @Override

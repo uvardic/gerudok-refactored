@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Objects;
 
@@ -107,8 +108,16 @@ public class SlotPanel extends JPanel implements Subject {
         stateManager.startMoveState();
     }
 
+    public void startSelectionRectangleState() {
+        stateManager.startSelectionRectangleState();
+    }
+
     public void setCanvasCursor(Cursor cursor) {
         canvas.setCursor(cursor);
+    }
+
+    public void paintSelectionRectangle(Rectangle2D selectionRectangle) {
+        canvas.setSelectionRectangle(selectionRectangle);
     }
 
     @Override

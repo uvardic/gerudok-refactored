@@ -237,6 +237,11 @@ public abstract class Device<T extends Device<T>> extends Element {
     }
 
     @Override
+    public boolean isElementIn(Rectangle2D selectionRectangle) {
+        return selectionRectangle.intersects(getPositionX(), getPositionY(), getWidth(), getHeight());
+    }
+
+    @Override
     public String toString() {
         return "Device{" +
                 "stroke=" + stroke +

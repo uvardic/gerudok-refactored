@@ -135,6 +135,11 @@ public class Link extends Element {
         return points.stream().anyMatch(point -> isPositionInPointBounds(position, point));
     }
 
+    @Override
+    public boolean isElementIn(Rectangle2D selectionRectangle) {
+        return points.stream().anyMatch(selectionRectangle::contains);
+    }
+
     private boolean isPositionInPointBounds(Point2D position, Point2D point) {
         Rectangle2D pointBounds = new Rectangle2D.Double(
                 point.getX() - (double) pointSize / 2,

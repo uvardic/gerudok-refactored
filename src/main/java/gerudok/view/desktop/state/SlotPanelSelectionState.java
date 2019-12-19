@@ -64,6 +64,8 @@ public class SlotPanelSelectionState implements SlotPanelState {
 
         if (slotPanel.getModel().isElementAt(mousePosition))
             slotPanel.startMoveState();
+        else
+            slotPanel.startSelectionRectangleState();
     }
 
     @Override

@@ -36,14 +36,12 @@ public class SlotPanelMoveState implements SlotPanelState {
 
         Point2D mousePosition = slotPanel.transformPosition(event.getPoint());
 
-        initializePreviousMousePosition(mousePosition);
-
+        initializeState(mousePosition);
         moveElements(mousePosition);
-
         previousMousePosition = mousePosition;
     }
 
-    private void initializePreviousMousePosition(Point2D mousePosition) {
+    private void initializeState(Point2D mousePosition) {
         if (!movingStarted) {
             previousMousePosition = mousePosition;
             movingStarted = true;

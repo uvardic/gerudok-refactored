@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 
 public abstract class Element implements TreeNodeModel {
@@ -42,6 +43,8 @@ public abstract class Element implements TreeNodeModel {
     public abstract void paintSelection(Graphics2D graphics2D);
 
     public abstract boolean isElementAt(Point2D position);
+
+    public abstract boolean isElementIn(Rectangle2D selectionRectangle);
 
     @Override
     public void acceptModelVisitor(TreeNodeModelVisitor visitor) {

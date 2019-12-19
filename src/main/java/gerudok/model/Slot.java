@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -107,6 +108,13 @@ public class Slot implements TreeNodeModel {
                 .orElseThrow(() -> new IllegalArgumentException(
                         String.format("Device not found for position: %s", position)
                 ));
+    }
+
+    public void selectElementsIn(Rectangle2D selectionRectangle) {
+        elements.stream()
+                .filter(element -> element.isElementIn(selectionRectangle))
+                .filter(element -> !selectedElements.contains(element))
+                .forEach(this::selectElement);
     }
 
     public void selectElement(Element element) {
